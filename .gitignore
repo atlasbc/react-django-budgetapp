@@ -9,3 +9,7 @@ db.sqlite3-journal
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+
+# Dependency directories
+node_modules/
+jspm_packages/
