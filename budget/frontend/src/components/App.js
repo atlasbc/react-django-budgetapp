@@ -1,52 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
+import { Button, Container, Box } from '@material-ui/core';
+import Total from "./Total";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      loaded: false,
-      placeholder: "Loading"
-    };
-  }
-
-  componentDidMount() {
-    fetch("api/dummy/")
-      .then(response => {
-        if (response.status > 400) {
-          return this.setState(() => {
-            return { placeholder: "Something went wrong!" };
-          });
-        }
-        return response.json();
-      })
-      .then(data => {
-        this.setState(() => {
-          return {
-            data,
-            loaded: true
-          };
-        });
-      });
-  }
-
-  render() {
-    return (
-      <ul>
-        {this.state.data.map(contact => {
-          return (
-            <li key={contact.id}>
-              {contact.name} - {contact.message}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+export default function App() {
+  return (
+    <div className="App">
+    <Container >
+      <Box mx="auto" my="8rem" width="50%" display="flex" bgcolor="#333333" color="#fff"
+      flexDirection="column" alignItems="center" borderRadius="1rem">
+        <Total />
+        <Button color="primary" style={{marginTop: "4rem"}} variant="contained">
+          Hello world
+        </Button>
+      </Box>
+    </Container>
+    </div>
+  )
 }
-
-export default App;
 
 const container = document.getElementById("app");
 render(<App />, container);

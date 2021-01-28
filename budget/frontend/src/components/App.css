@@ -1,0 +1,6 @@
+/* For now I don't import this since it requires webpack */
+.App {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

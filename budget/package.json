@@ -22,5 +22,9 @@
     "react-dom": "^17.0.1",
     "webpack": "^5.18.0",
     "webpack-cli": "^4.4.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2"
   }
 }
