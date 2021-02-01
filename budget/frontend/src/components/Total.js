@@ -6,11 +6,13 @@ export default function Total() {
     const [total, setTotal] = useState(1000);
     const [spending, setSpending] = useState(0);
     const [data, setData] = useState([{
+        id: 1,
         name: "Milk",
         price: 2,
         category: "Grocery"
     },
     {
+        id: 2,
         name:"Bread",
         price: 1,
         category: "Grocery"
@@ -24,8 +26,10 @@ export default function Total() {
         setTotal(total - spending);
 
         console.log(e.target[0].value)
+
         // Create new data
         const new_data = {
+            id: data.length +1,
             name: e.target[0].value,
             price: e.target[1].value,
             category: e.target[2].value, 
@@ -37,9 +41,6 @@ export default function Total() {
         e.target[1].value = "";
         e.target[2].value = "";
 
-        // Trying to use Ref Hook
-        console.log("REFFF")
-        console.log(sValue.current);
     }
 
     function handleChange(e){
@@ -47,12 +48,17 @@ export default function Total() {
         setSpending(e.target.value);
     }
 
-    const spending_el = data.map((e) => {
+    function handleDelete(id){
+        console.log(id);
+        setData(data.filter((spending) => spending.id !== id));
+    }
+
+    const spending_el = data.map((spending) => {
         return (
-        <Box margin="0.5rem 0" display="flex">
-            {`${e.name}: ${e.price} - ${e.category} `}
+        <Box key={`item-${spending.id}`} margin="0.5rem 0" display="flex">
+            {`${spending.name}: $${spending.price} - ${spending.category} `}
             <Edit fontSize="small" />
-            <Delete fontSize="small" />
+            <Delete fontSize="small" onClick={() => handleDelete(spending.id)}/>
         </Box>
         )
     })
