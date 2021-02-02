@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Button, TextField, Box } from '@material-ui/core';
-import { Edit, Delete } from '@material-ui/icons';
+import {  Delete } from '@material-ui/icons';
 
 export default function Total() {
     const [total, setTotal] = useState(1000);
@@ -25,7 +25,7 @@ export default function Total() {
         console.log(e);
         setTotal(total - spending);
 
-        console.log(e.target[0].value)
+        console.log(e)
 
         // Create new data
         const new_data = {
@@ -57,8 +57,7 @@ export default function Total() {
         return (
         <Box key={`item-${spending.id}`} margin="0.5rem 0" display="flex">
             {`${spending.name}: $${spending.price} - ${spending.category} `}
-            <Edit fontSize="small" />
-            <Delete fontSize="small" onClick={() => handleDelete(spending.id)}/>
+            <Delete fontSize="small" onClick={() => handleDelete(spending.id)} cursor="pointer" />
         </Box>
         )
     })
@@ -78,13 +77,14 @@ export default function Total() {
                 Name:
                 <input type="text" placeholder="spending" onChange={handleChange} />
                 </label> */}
-                <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" ></TextField>
-                <TextField label="$"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" onChange={handleChange} ></TextField>
-                <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" ></TextField>
+                <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
+                <TextField label="$"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" onChange={handleChange} required={true} ></TextField>
+                <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
                 <Button color="primary" style={{height:"100%", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
             </form>
             <Box border="1px solid white" padding="0.5rem" display="flex" flexDirection="column" width="100%" justifyContent="center">
-            {spending_el}
+            {data.length > 0 ? spending_el : <div>There isn't any spending here</div>}
+                
             </Box>
         </>
     )
