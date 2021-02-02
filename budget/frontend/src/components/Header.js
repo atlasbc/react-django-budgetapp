@@ -1,10 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Button, Link } from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import {
-    Link
+    Link as RouterLink
   } from "react-router-dom";
 
 export default function Header() {
@@ -16,9 +16,9 @@ export default function Header() {
                     <MenuIcon/>
                 </IconButton>
                 <nav>
-                <Link to="/">Home</Link>
-                <Link to="about">About</Link>
-                <Button variant="outlined" size="small" color="inherit" style={{marginRight: "12px"}} >Login</Button>
+                <Link component={RouterLink} to="/" color="inherit" style={{marginRight: "12px"}} >Home</Link>
+                <Link component={RouterLink} to="about" color="inherit" >About</Link>
+                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >Login</Button>
                 </nav>
                 </Toolbar>              
             </AppBar>
