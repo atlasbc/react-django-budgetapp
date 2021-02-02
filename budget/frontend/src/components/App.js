@@ -5,6 +5,9 @@ import { Box } from '@material-ui/core';
 import Total from "./Total";
 import Header from "./Header";
 import About from "./About";
+import Income from "./Income";
+import Transactions from "./Transactions";
+import Budget from "./Budget";
 
 import {
   BrowserRouter as Router,
@@ -23,7 +26,16 @@ export default function App() {
             <Route exact path="/">
                 <Total />
             </Route>
-            <Route exact path="/about">
+            <Route path="/income">
+                <Income />
+            </Route>
+            <Route path="/transactions">
+                <Transactions />
+            </Route>
+            <Route  path="/budget">
+                <Budget />
+            </Route>
+            <Route  path="/about">
                 <About />
             </Route>
           </Switch>         
