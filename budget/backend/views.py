@@ -9,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 @require_POST
-@csrf_exempt
 def login_view(request):
     # I may need to require CSRF TOKEN for this.
 

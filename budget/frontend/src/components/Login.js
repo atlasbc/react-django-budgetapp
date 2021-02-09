@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Button, TextField } from '@material-ui/core';
+import Cookies from 'js-cookie';
 
 
 export default function Login() {
@@ -17,10 +18,14 @@ export default function Login() {
             password
         }
         console.log(data);
+        const csrftoken = Cookies.get('csrftoken');
+        console.log(csrftoken);
+
         fetch('login-request', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
             },
             mode: 'same-origin',
             body: JSON.stringify(data),
