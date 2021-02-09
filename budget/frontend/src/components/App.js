@@ -8,6 +8,8 @@ import About from "./About";
 import Income from "./Income";
 import Transactions from "./Transactions";
 import Budget from "./Budget";
+import Login from "./Login";
+
 
 import {
   BrowserRouter as Router,
@@ -38,6 +40,9 @@ export default function App() {
             <Route  path="/about">
                 <About />
             </Route>
+            <Route  path="/login">
+                <Login />
+            </Route>            
           </Switch>         
         </Box>
       </div>

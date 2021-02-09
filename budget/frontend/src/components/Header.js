@@ -21,7 +21,10 @@ export default function Header() {
                 <Link component={RouterLink} to="transactions" color="inherit" style={{marginRight: "12px"}} >Transactions</Link>
                 <Link component={RouterLink} to="budget" color="inherit" style={{marginRight: "12px"}} >Budget</Link>
                 <Link component={RouterLink} to="about" color="inherit" >About</Link>
-                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >Login</Button>
+
+                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
+                    <Link component={RouterLink} to="login" color="inherit" >Login</Link>
+                </Button>
                 </nav>
                 </Toolbar>              
             </AppBar>

@@ -6,4 +6,6 @@ urlpatterns = [
     path("api/income/", views.IncomeListCreate.as_view(), name="income"),
     path("api/user/", views.UserListCreate.as_view(), name="user"),
     path("api/user/<int:pk>/", views.UserDetail.as_view(), name="user_detail"),
+    path("login-request", views.login_view),
+    path("logout-request", views.logout_view),
 ]
