@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, IconButton, Button, Link } from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
+import Logout from './Logout';
 
 import {
     Link as RouterLink
@@ -25,6 +26,7 @@ export default function Header() {
                 <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
                     <Link component={RouterLink} to="login" color="inherit" >Login</Link>
                 </Button>
+                <Logout />
                 </nav>
                 </Toolbar>              
             </AppBar>
