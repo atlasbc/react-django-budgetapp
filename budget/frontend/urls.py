@@ -7,4 +7,6 @@ urlpatterns = [
     path('about', views.index),
     path('income', views.index),
     path('login', views.index),
+    path('transactions', views.index),
+    path('budget', views.index),
 ]

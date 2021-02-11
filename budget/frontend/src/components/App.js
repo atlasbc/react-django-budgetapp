@@ -51,20 +51,26 @@ export default function App() {
             <Header />
             <Switch>
               <Route exact path="/">
-                  <Total />
+                {user? <Total /> : <Redirect to= "/login"/>}
               </Route>
+
               <Route path="/income">
-                  <Income />
+              {user? <Income /> : <Redirect to= "/login"/>}
               </Route>
+
               <Route path="/transactions">
-                  <Transactions />
+              {user? <Transactions /> : <Redirect to= "/login"/>}
+                  
               </Route>
+
               <Route  path="/budget">
-                  <Budget />
+              {user? <Budget /> : <Redirect to= "/login"/>}
               </Route>
+
               <Route  path="/about">
                   <About />
               </Route>
+              
               <Route  path="/login">
                   {user? <Redirect to ="/" /> : <Login /> }
               </Route>            
