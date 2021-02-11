@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Button } from '@material-ui/core';
+import {UserContext} from './UserContext';
 
 export default function Logout() {
+    const {setUser}  = useContext(UserContext);
 
     // need context API to give feedback
 
@@ -9,7 +11,10 @@ export default function Logout() {
 
         fetch('logout-request')
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            localStorage.removeItem("user")
+            setUser(false);
+        })
 
     }
 

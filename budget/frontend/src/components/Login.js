@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Button, TextField } from '@material-ui/core';
 import Cookies from 'js-cookie';
+import {UserContext} from './UserContext';
 
 
 export default function Login() {
 
     const [message, setMessage] = useState("")
+    const  {setUser}  = useContext(UserContext);
 
     function handleSubmit(e){
         e.preventDefault();
@@ -35,6 +37,8 @@ export default function Login() {
             console.log(data);
             if (data["success"]){
                 console.log(data["success"]);
+                localStorage.setItem("user", data["user"])
+                setUser(data["user"]);
                 setMessage(data["success"]);
             }
             else {

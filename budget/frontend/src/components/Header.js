@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import { AppBar, Toolbar, IconButton, Button, Link } from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import Logout from './Logout';
+import {UserContext} from './UserContext';
 
 import {
     Link as RouterLink
   } from "react-router-dom";
 
 export default function Header() {
+    const  {user}  = useContext(UserContext);
+    console.log(`user from Header component ${user}`);
+
     return (
 
             <AppBar position="static" style={{marginBottom:"1rem"}}>
@@ -27,6 +31,7 @@ export default function Header() {
                     <Link component={RouterLink} to="login" color="inherit" >Login</Link>
                 </Button>
                 <Logout />
+                {user? user: ""}
                 </nav>
                 </Toolbar>              
             </AppBar>

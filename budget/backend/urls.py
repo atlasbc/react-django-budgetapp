@@ -8,4 +8,5 @@ urlpatterns = [
     path("api/user/<int:pk>/", views.UserDetail.as_view(), name="user_detail"),
     path("login-request", views.login_view),
     path("logout-request", views.logout_view),
+    path("auth-check", views.auth_check),
 ]

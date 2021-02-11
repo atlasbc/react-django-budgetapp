@@ -34,15 +34,25 @@ def login_view(request):
     if user is not None:
         login(request, user)
         # Redirect to a success page.
-        return JsonResponse({"success": "You have logged in! Go to your home page"})
+        return JsonResponse({"success": "You have logged in! Go to your home page",
+                             "user": username})
     else:
         # Return an 'invalid login' error message.
         return JsonResponse({"error": "Invalid login"})
 
 
+def auth_check(request):
+    user = request.user
+
+    if user.is_authenticated:
+        return JsonResponse({"user": str(user)})
+    else:
+        return JsonResponse({"user": ""})
+
+
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect("/")
+    return JsonResponse({"user": False})
 
 
 class DummyListCreate(generics.ListCreateAPIView):
