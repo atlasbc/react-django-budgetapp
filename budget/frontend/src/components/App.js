@@ -14,6 +14,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 
 
@@ -65,7 +66,7 @@ export default function App() {
                   <About />
               </Route>
               <Route  path="/login">
-                  <Login />
+                  {user? <Redirect to ="/" /> : <Login /> }
               </Route>            
             </Switch>         
           </Box>

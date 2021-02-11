@@ -39,14 +39,11 @@ export default function Login() {
                 console.log(data["success"]);
                 localStorage.setItem("user", data["user"])
                 setUser(data["user"]);
-                setMessage(data["success"]);
             }
             else {
                 console.log(data["error"]);
                 setMessage(data["error"]);
             }
-            e.target[0].value = "";
-            e.target[1].value = "";
         })
         .catch(error => console.log(error))
     }
