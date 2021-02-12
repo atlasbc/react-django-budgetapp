@@ -9,6 +9,8 @@ import Income from "./Income";
 import Transactions from "./Transactions";
 import Budget from "./Budget";
 import Login from "./Login";
+import Register from "./Register";
+
 import  {UserContext} from "./UserContext";
 import {
   BrowserRouter as Router,
@@ -73,7 +75,10 @@ export default function App() {
               
               <Route  path="/login">
                   {user? <Redirect to ="/" /> : <Login /> }
-              </Route>            
+              </Route>
+              <Route  path="/register">
+                  {user? <Redirect to ="/" /> : <Register /> }
+              </Route>
             </Switch>         
           </Box>
         </div>

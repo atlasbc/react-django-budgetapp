@@ -2,17 +2,21 @@ from .models import Dummy, Income, Transaction, Budget, User
 from .serializers import DummySerializer, IncomeSerializer, UserSerializer
 from rest_framework import generics
 from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect, JsonResponse
 import json
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
+#####################################################
+########### AUTHENTICATION RELATED VIEWS ############
+#####################################################
+
 
 @require_POST
 def login_view(request):
-    # I may need to require CSRF TOKEN for this.
+    # Uses CSRF Token
 
-    # I might need to decode JSON since post request could come from there.
     print(request)
     print(request.body)
     data = json.loads(request.body)
@@ -41,6 +45,50 @@ def login_view(request):
         return JsonResponse({"error": "Invalid login"})
 
 
+@require_POST
+def register_view(request):
+    # Uses CSRF Token
+
+    print(request)
+    print(request.body)
+    data = json.loads(request.body)
+    print(data)
+    username = data.get("username")
+    password = data.get('password')
+    confirmation = data.get('confirmation')
+    email = data.get('email')
+
+    if username is None or password is None or confirmation is None or email is None:
+        return JsonResponse({
+            "error": "Please fill all the fields"
+        }, status=400)
+
+    if password != confirmation:
+        return JsonResponse({
+            "error": "Passwords must match",
+            "bad-password": True
+        }, status=400)
+
+    if request.user.is_authenticated:
+        return JsonResponse({
+            "error": "You are already logged in!"
+        }, status=400)
+
+    try:
+        user = User.objects.create_user(
+            username=username, email=email, password=password)
+    except IntegrityError:
+        return JsonResponse({
+            "error": "This username is already exist"
+        }, status=400)
+
+    login(request, user)
+    return JsonResponse({
+        "success": "You have successfully registered",
+        "user": username
+    })
+
+
 def auth_check(request):
     user = request.user
 
@@ -55,6 +103,9 @@ def logout_view(request):
     return JsonResponse({"user": False})
 
 
+#####################################################
+################ API RELATED VIEWS ##################
+#####################################################
 class DummyListCreate(generics.ListCreateAPIView):
     queryset = Dummy.objects.all()
     serializer_class = DummySerializer

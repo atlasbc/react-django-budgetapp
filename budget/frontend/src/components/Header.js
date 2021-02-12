@@ -37,9 +37,14 @@ export default function Header() {
                 <Link component={RouterLink} to="about" color="inherit" >About</Link>
 
                 {user?<Logout />
-                :<Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
+                :<>
+                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
                     <Link component={RouterLink} to="login" color="inherit" >Login</Link>
                 </Button>
+                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
+                    <Link component={RouterLink} to="register" color="inherit" >Register</Link>
+                </Button>
+                </>
                 }
 
                 {user? user: ""}
