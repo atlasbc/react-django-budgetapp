@@ -130,7 +130,20 @@ class IncomeListCreate(generics.ListCreateAPIView):
     # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
     # Because it provides the user_id by selecting user from request
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        # This request object belongs to rest-framework not Django
+        # rest-framework returns request body data via request.data
+        # It also handles data being json object
+        # BROWSABLE API STILL WORKS with this customization
+        print(self.request)
+        print(self.request.data)
+        data = self.request.data
+
+        name = data.get("name")
+        amount = data.get('amount')
+        category = data.get('category')
+
+        serializer.save(user=self.request.user, name=name, amount=amount,
+                        category=category)
 
 
 class UserListCreate(generics.ListCreateAPIView):
