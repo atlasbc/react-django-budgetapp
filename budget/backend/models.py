@@ -25,6 +25,8 @@ class Dummy(models.Model):
 
 
 class User(AbstractUser):
+    # TODO
+    # total could be calculated by accounting for income, transactions etc.
     total = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
 

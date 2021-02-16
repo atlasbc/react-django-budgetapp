@@ -125,7 +125,12 @@ class IncomeListCreate(generics.ListCreateAPIView):
         user = self.request.user
         print(user)
         print(self.request.auth)
-        return Income.objects.filter(user=user).order_by('-id')
+        return user.income.all()
+
+    # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
+    # Because it provides the user_id by selecting user from request
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class UserListCreate(generics.ListCreateAPIView):
