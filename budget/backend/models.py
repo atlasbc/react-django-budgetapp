@@ -3,6 +3,20 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
+SPENDING_CHOICES = [
+    ('Grocery', 'Grocery'),
+    ('Bills & Utilities', 'Bills & Utilities'),
+    ('Entertainment', 'Entertainment'),
+    ('Other', 'Other')
+]
+
+INCOME_CHOICES = [
+    ('Salary', 'Salary'),
+    ('Bonus', 'Bonus'),
+    ('Side', 'Side'),
+    ('Other', 'Other')
+]
+
 
 class Dummy(models.Model):
     name = models.CharField(max_length=100)
@@ -14,22 +28,36 @@ class User(AbstractUser):
     total = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
 
+# class Category(models.Model):
+#     CATEGORY_CHOICES = [
+#         ('Grocery', 'Grocery'),
+#         ('Bills & Utilities', 'Bills & Utilities'),
+#         ('Entertainment', 'Entertainment'),
+#         ('Other', 'Other')
+#     ]
+#     name = models.CharField(
+#         max_length=100, choices=CATEGORY_CHOICES)
+#     # User might not make sense here actually. Because categories belong to income, transaction, budget.
+#     # But how can a user arrange his/her categories though?
+#     user = models.ForeignKey(
+#         User, on_delete=models.CASCADE, related_name="categories")
+
+
 class Income(models.Model):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="income")
-    # category = models.ForeignKey(
-    #     Category, on_delete=models.CASCADE, related_name="income_categories")
+    category = models.CharField(max_length=100, choices=INCOME_CHOICES)
 
 
 class Transaction(models.Model):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    quantity = models.IntegerField(blank=True, null=True)
+    category = models.CharField(max_length=100, choices=SPENDING_CHOICES)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="transactions")
-    # category = models.ForeignKey(
-    #     Category, on_delete=models.CASCADE, related_name="transation_categories")
 
 
 class Budget(models.Model):
@@ -37,14 +65,6 @@ class Budget(models.Model):
     amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="budget")
+    category = models.CharField(max_length=100, choices=SPENDING_CHOICES)
     # category = models.ForeignKey(
     #     Category, on_delete=models.CASCADE, related_name="budget_categories")
-
-
-# # Maybe I can implement Category later? Since it is a relatively complex issue?
-# class Category(models.Model):
-#     name = models.CharField(max_length=100)
-#     # User might not make sense here actually. Because categories belong to income, transaction, budget.
-#     # But how can a user arrange his/her categories though?
-#     user = models.ForeignKey(
-#         User, on_delete=models.CASCADE, related_name="categories")

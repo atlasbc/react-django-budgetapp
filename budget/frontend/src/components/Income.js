@@ -20,7 +20,7 @@ export default function Income() {
 
 
     const income = incomeData.map(inc => {
-        return <li style={{margin: "9px 0"}} key= {inc.id}>{`${inc.name}: $${inc.amount}`}</li>
+        return <li style={{margin: "9px 0"}} key= {inc.id}>{`${inc.name}: $${inc.amount} || ${inc.category}`}</li>
     })
 
     return (
