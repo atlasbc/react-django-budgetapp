@@ -164,6 +164,22 @@ class IncomeDelete(generics.DestroyAPIView):
         return user.income.all()
 
 
+class IncomeUpdate(generics.UpdateAPIView):
+    # This should check authentication of the user to prevent other user's data.
+    # returns the updated data if it is successful
+    serializer_class = IncomeSerializer
+
+    def get_queryset(self):
+        # This prevents deleting other people's data
+        # Because queryset only returns authenticated user's data
+        # If you try to delete other people's income id
+        # It returns "detail": "Not found."
+        user = self.request.user
+        print(user)
+        print(self.request.auth)
+        return user.income.all()
+
+
 ######### USER #########
 
 
