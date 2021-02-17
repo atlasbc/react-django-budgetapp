@@ -1,12 +1,17 @@
 from .models import Dummy, Income, Transaction, Budget, User
 from .serializers import DummySerializer, IncomeSerializer, UserSerializer
-from rest_framework import generics
+
+import json
+
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, JsonResponse
-import json
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+
+from rest_framework import generics
+# from rest_framework import status
+# from rest_framework.response import Response
 
 #####################################################
 ########### AUTHENTICATION RELATED VIEWS ############
@@ -110,12 +115,10 @@ class DummyListCreate(generics.ListCreateAPIView):
     queryset = Dummy.objects.all()
     serializer_class = DummySerializer
 
+######### INCOME #########
+
 
 class IncomeListCreate(generics.ListCreateAPIView):
-    # Need to find return income specific to one user.
-    # TODO
-    # POST also fails with this
-    # queryset = Income.objects.all()
     serializer_class = IncomeSerializer
 
     # This returns data for logged user
@@ -144,6 +147,24 @@ class IncomeListCreate(generics.ListCreateAPIView):
 
         serializer.save(user=self.request.user, name=name, amount=amount,
                         category=category)
+
+
+class IncomeDelete(generics.DestroyAPIView):
+    # This should check authentication of the user to prevent other user's data.
+    serializer_class = IncomeSerializer
+
+    def get_queryset(self):
+        # This prevents deleting other people's data
+        # Because queryset only returns authenticated user's data
+        # If you try to delete other people's income id
+        # It returns "detail": "Not found."
+        user = self.request.user
+        print(user)
+        print(self.request.auth)
+        return user.income.all()
+
+
+######### USER #########
 
 
 class UserListCreate(generics.ListCreateAPIView):

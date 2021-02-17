@@ -65,8 +65,19 @@ export default function Income() {
         setCategory(e.target.value);
     }
 
+    function handleDelete(id){
+        console.log(id);
+        setIncomeData(incomeData.filter((income) => income.id !== id));
+        // Send request to server
+        
+    }
+    // TODO. Delete probably won't work if new data come from state not server since state
+    // doesn't get id for data. 
     const income = incomeData.map(inc => {
-        return <li style={{margin: "9px 0"}} key= {inc.id}>{`${inc.name}: $${inc.amount} || ${inc.category}`}</li>
+        return (<li style={{margin: "9px 0"}} key= {inc.id}>
+                {`${inc.name}: $${inc.amount} || ${inc.category}`}
+                <Delete fontSize="small" onClick={() => handleDelete(inc.id)} cursor="pointer" />
+                </li>)
     })
 
     return (
@@ -78,7 +89,7 @@ export default function Income() {
                     <TextField label="$" type="number"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
                     {/* <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} >
                     </TextField> */}
-                    <Select value={category} style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
+                    <Select value={category} variant="filled" style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
                         <MenuItem value='Salary'>Salary</MenuItem>
                         <MenuItem value='Side'>Side</MenuItem>
                         <MenuItem value='Bonus'>Bonus</MenuItem>
