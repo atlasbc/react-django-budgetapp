@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 export default function Income() {
     const [incomeData, setIncomeData] = useState([])
     const [category, setCategory] = useState("")
+    const csrftoken = Cookies.get('csrftoken');
 
     // View for income data
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function Income() {
             amount: e.target[1].value,
             category: e.target[2].value, 
         }
-        setIncomeData([...incomeData, new_data]);
+        
         
         // set spending text to zero after submitting
         e.target[0].value = "";
@@ -42,7 +43,7 @@ export default function Income() {
 
         // send data to server
         // I might use Context API for CSRF Token TODO
-        const csrftoken = Cookies.get('csrftoken');
+        
 
         fetch('api/income/', {
             method: 'POST',
@@ -56,6 +57,8 @@ export default function Income() {
         .then(response => response.json()) // response
         .then(data => {
             console.log(data)
+            // State is set here to receive id for data from server
+            setIncomeData([...incomeData, data]);
         })
         .catch(er => console.log(er))
     }
@@ -69,10 +72,23 @@ export default function Income() {
         console.log(id);
         setIncomeData(incomeData.filter((income) => income.id !== id));
         // Send request to server
-        
+        fetch(`api/income/${id}/delete/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            mode: 'same-origin'
+        })
+        .then(response => response.json()) // response
+        .then(data => {
+            // returns {"detail": "Not found."} if it fails
+            console.log(data)
+            // doesn't return any data if it is successfull, only 204 Response
+        })
+        .catch(er => console.log(er))
+
     }
-    // TODO. Delete probably won't work if new data come from state not server since state
-    // doesn't get id for data. 
     const income = incomeData.map(inc => {
         return (<li style={{margin: "9px 0"}} key= {inc.id}>
                 {`${inc.name}: $${inc.amount} || ${inc.category}`}
