@@ -94,6 +94,7 @@ export default function Transactions() {
         return (<li style={{margin: "9px 0"}} key= {transaction.id}>
                 {`${transaction.name}: $${transaction.amount}  || ${transaction.category}`}
                 <Delete fontSize="small" onClick={() => handleDelete(transaction.id)} cursor="pointer" />
+                {`~ ${transaction.created_at}`}
                 </li>)
     })
 
@@ -103,7 +104,7 @@ export default function Transactions() {
                 <h2>Add New Transaction</h2>
                 <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem"}}>
                     <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
-                    <TextField label="$" type="number"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
+                    <TextField label="$" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
                     <Select value={category} variant="filled" style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
                         <MenuItem value='Grocery'>Grocery</MenuItem>
                         <MenuItem value='Bills & Utilities'>Bills & Utilities</MenuItem>

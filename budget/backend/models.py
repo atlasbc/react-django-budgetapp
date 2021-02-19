@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 
 # Create your models here.
 
@@ -51,6 +52,7 @@ class Income(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="income")
     category = models.CharField(max_length=100, choices=INCOME_CHOICES)
+    created_at = models.DateField(auto_now_add=True)
 
 
 class Transaction(models.Model):
@@ -59,6 +61,7 @@ class Transaction(models.Model):
     category = models.CharField(max_length=100, choices=SPENDING_CHOICES)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="transactions")
+    created_at = models.DateField(auto_now_add=True)
 
 
 class Budget(models.Model):

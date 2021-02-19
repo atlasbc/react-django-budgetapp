@@ -11,7 +11,7 @@ class DummySerializer(serializers.ModelSerializer):
 class IncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Income
-        fields = ('id', 'name', 'amount', 'category')
+        fields = ('id', 'name', 'amount', 'category', 'created_at')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,4 +25,4 @@ class UserSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'name', 'amount', 'category')
+        fields = ('id', 'name', 'amount', 'category', 'created_at')

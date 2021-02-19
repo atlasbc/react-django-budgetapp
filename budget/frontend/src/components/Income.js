@@ -94,6 +94,7 @@ export default function Income() {
         return (<li style={{margin: "9px 0"}} key= {inc.id}>
                 {`${inc.name}: $${inc.amount} || ${inc.category}`}
                 <Delete fontSize="small" onClick={() => handleDelete(inc.id)} cursor="pointer" />
+                {`~ ${inc.created_at}`}
                 </li>)
     })
 
@@ -103,7 +104,7 @@ export default function Income() {
                 <h2>Add New Income</h2>
                 <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem"}}>
                     <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
-                    <TextField label="$" type="number"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
+                    <TextField label="$"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
                     {/* <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} >
                     </TextField> */}
                     <Select value={category} variant="filled" style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
