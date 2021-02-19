@@ -1,5 +1,5 @@
 from .models import Dummy, Income, Transaction, Budget, User
-from .serializers import DummySerializer, IncomeSerializer, UserSerializer
+from .serializers import DummySerializer, IncomeSerializer, UserSerializer, TransactionSerializer
 
 import json
 
@@ -180,6 +180,66 @@ class IncomeUpdate(generics.UpdateAPIView):
         return user.income.all()
 
 
+######### TRANSACTION #########
+class TransactionListCreate(generics.ListCreateAPIView):
+    serializer_class = TransactionSerializer
+
+    # This returns data for logged user
+    def get_queryset(self):
+        # with this POST doesnt work
+        # ERROR: NOT NULL constraint failed: backend_income.user_id
+        user = self.request.user
+        print(user)
+        print(self.request.auth)
+        return user.transactions.all()
+
+    # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
+    # Because it provides the user_id by selecting user from request
+    def perform_create(self, serializer):
+        # This request object belongs to rest-framework not Django
+        # rest-framework returns request body data via request.data
+        # It also handles data being json object
+        # BROWSABLE API STILL WORKS with this customization
+        print(self.request)
+        print(self.request.data)
+        data = self.request.data
+
+        name = data.get("name")
+        amount = data.get('amount')
+        category = data.get('category')
+        serializer.save(user=self.request.user, name=name, amount=amount,
+                        category=category)
+
+
+class TransactionDelete(generics.DestroyAPIView):
+    # This should check authentication of the user to prevent other user's data.
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        # This prevents deleting other people's data
+        # Because queryset only returns authenticated user's data
+        # If you try to delete other people's income id
+        # It returns "detail": "Not found."
+        user = self.request.user
+        print(user)
+        print(self.request.auth)
+        return user.transactions.all()
+
+
+class TransactionUpdate(generics.UpdateAPIView):
+    # This should check authentication of the user to prevent other user's data.
+    # returns the updated data if it is successful
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        # This prevents deleting other people's data
+        # Because queryset only returns authenticated user's data
+        # If you try to delete other people's income id
+        # It returns "detail": "Not found."
+        user = self.request.user
+        print(user)
+        print(self.request.auth)
+        return user.transactions.all()
 ######### USER #########
 
 

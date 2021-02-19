@@ -56,7 +56,6 @@ class Income(models.Model):
 class Transaction(models.Model):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    quantity = models.IntegerField(blank=True, null=True)
     category = models.CharField(max_length=100, choices=SPENDING_CHOICES)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="transactions")

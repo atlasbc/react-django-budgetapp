@@ -87,8 +87,9 @@ export default function Income() {
             // doesn't return any data if it is successfull, only 204 Response
         })
         .catch(er => console.log(er))
-
     }
+
+
     const income = incomeData.map(inc => {
         return (<li style={{margin: "9px 0"}} key= {inc.id}>
                 {`${inc.name}: $${inc.amount} || ${inc.category}`}
