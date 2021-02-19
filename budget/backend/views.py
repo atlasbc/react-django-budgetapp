@@ -1,6 +1,6 @@
 from .models import Dummy, Income, Transaction, Budget, User
 from .serializers import DummySerializer, IncomeSerializer, UserSerializer, TransactionSerializer
-
+from django.db.models import Sum
 import json
 
 from django.contrib.auth import authenticate, login, logout
@@ -240,6 +240,21 @@ class TransactionUpdate(generics.UpdateAPIView):
         print(user)
         print(self.request.auth)
         return user.transactions.all()
+
+######### HOME #########
+
+
+def home_view(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({"error": "You are not logged in!"}, status=401)
+
+    income_sum = user.income.aggregate(Sum('amount'))['amount__sum']
+    transaction_sum = user.transactions.aggregate(Sum('amount'))['amount__sum']
+    total = income_sum - transaction_sum
+
+    return JsonResponse({"total": total})
+
 ######### USER #########
 
 

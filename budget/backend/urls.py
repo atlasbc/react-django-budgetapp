@@ -24,4 +24,6 @@ urlpatterns = [
     path("logout-request", views.logout_view),
     path("auth-check", views.auth_check),
     path("register-request", views.register_view),
+    # Home View API
+    path("home-request", views.home_view)
 ]

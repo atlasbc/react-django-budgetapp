@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { render } from "react-dom";
 import "./App.css";
 import { Box } from '@material-ui/core';
-import Total from "./Total";
+import Home from "./Home";
 import Header from "./Header";
 import About from "./About";
 import Income from "./Income";
@@ -53,7 +53,7 @@ export default function App() {
             <Header />
             <Switch>
               <Route exact path="/">
-                {user? <Total /> : <Redirect to= "/login"/>}
+                {user? <Home /> : <Redirect to= "/login"/>}
               </Route>
 
               <Route path="/income">
