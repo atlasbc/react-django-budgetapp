@@ -2,11 +2,19 @@ import React, {useState, useEffect} from 'react'
 import { Button, TextField, Select, MenuItem } from '@material-ui/core';
 import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    root: {
+      background: '#dddddd',
+    },
+  });
 
 export default function Income() {
     const [incomeData, setIncomeData] = useState([])
     const [category, setCategory] = useState("")
     const csrftoken = Cookies.get('csrftoken');
+    const classes = useStyles();
 
     // View for income data
     useEffect(() => {
@@ -102,18 +110,19 @@ export default function Income() {
         <div>
             <div>
                 <h2>Add New Income</h2>
-                <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem"}}>
-                    <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
-                    <TextField label="$"  size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
+                <form onSubmit={handleSubmit} autoComplete="off" style={{margin:"1rem 0", display:"flex"}}>
+                    <TextField label="Name"  size="small" style={{width:"6rem" }} variant="filled" required={true} ></TextField>
+                    <TextField label="$"  size="small" style={{width:"6rem" }} variant="filled" required={true} ></TextField>
                     {/* <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} >
                     </TextField> */}
-                    <Select value={category} variant="filled" style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
+                    <Select name="Category"  label="Category" value={category} variant="filled" style={{width:"6rem", borderRadius:"0"}} 
+                    onChange={handleChange} required={true} margin="dense">
                         <MenuItem value='Salary'>Salary</MenuItem>
                         <MenuItem value='Side'>Side</MenuItem>
                         <MenuItem value='Bonus'>Bonus</MenuItem>
                         <MenuItem value='Other'>Other</MenuItem>
                     </Select>
-                    <Button color="primary" style={{height:"100%", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
+                    <Button color="primary" disableRipple={true} style={{width:"8rem", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
                 </form>
             </div>
             <h2>Your Income Data</h2>

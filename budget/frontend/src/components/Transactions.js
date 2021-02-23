@@ -102,16 +102,16 @@ export default function Transactions() {
         <div>
             <div>
                 <h2>Add New Transaction</h2>
-                <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem"}}>
-                    <TextField label="Name" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
-                    <TextField label="$" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} ></TextField>
-                    <Select value={category} variant="filled" style={{width:"6rem" ,backgroundColor:"#fff"}} onChange={handleChange} required={true}>
+                <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem", display:"flex"}}>
+                    <TextField label="Name" size="small" style={{width:"6rem"}} variant="filled" required={true} ></TextField>
+                    <TextField label="$" size="small" style={{width:"6rem"}} variant="filled" required={true} ></TextField>
+                    <Select value={category} variant="filled" margin="dense" style={{width:"6rem"}} onChange={handleChange} required={true}>
                         <MenuItem value='Grocery'>Grocery</MenuItem>
                         <MenuItem value='Bills & Utilities'>Bills & Utilities</MenuItem>
                         <MenuItem value='Entertainment'>Entertainment</MenuItem>
                         <MenuItem value='Other'>Other</MenuItem>
                     </Select>
-                    <Button color="primary" style={{height:"100%", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
+                    <Button color="primary" style={{width:"8rem", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
                 </form>
             </div>
             <h2>Your Transaction Data</h2>

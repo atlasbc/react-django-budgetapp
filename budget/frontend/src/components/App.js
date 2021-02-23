@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { render } from "react-dom";
 import "./App.css";
-import { Box } from '@material-ui/core';
+import { Box, createMuiTheme, CssBaseline } from '@material-ui/core';
 import Home from "./Home";
 import Header from "./Header";
 import About from "./About";
@@ -10,6 +10,7 @@ import Transactions from "./Transactions";
 import Budget from "./Budget";
 import Login from "./Login";
 import Register from "./Register";
+import { ThemeProvider } from "@material-ui/styles";
 
 import  {UserContext} from "./UserContext";
 import {
@@ -19,6 +20,11 @@ import {
   Redirect,
 } from "react-router-dom";
 
+const theme = createMuiTheme({
+  palette: {
+    type: "dark"
+  }
+});
 
 export default function App() {
 
@@ -47,6 +53,8 @@ export default function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Router>
+      <ThemeProvider theme={theme}>
+      <CssBaseline/>
         <div className="App">
           <Box mx="auto" py="4rem" width="50%" height="80vh" display="flex" color="#fff"
           flexDirection="column" alignItems="center"  borderRadius="0.5rem" >
@@ -82,6 +90,7 @@ export default function App() {
             </Switch>         
           </Box>
         </div>
+        </ThemeProvider>
       </Router>
     </UserContext.Provider>
   )

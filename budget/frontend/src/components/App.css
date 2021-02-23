@@ -1,11 +1,9 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .App {
-  background-color: #1b1a1ae8;
   min-height: 100vh;
   display: flex;
   align-items: center;
