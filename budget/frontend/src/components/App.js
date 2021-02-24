@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { render } from "react-dom";
+// Components
 import "./App.css";
-import { Box, createMuiTheme, CssBaseline, Paper } from '@material-ui/core';
 import Home from "./Home";
 import Header from "./Header";
 import About from "./About";
@@ -10,15 +10,22 @@ import Transactions from "./Transactions";
 import Budget from "./Budget";
 import Login from "./Login";
 import Register from "./Register";
-import { ThemeProvider } from "@material-ui/styles";
-
 import  {UserContext} from "./UserContext";
+import Sidebar from "./SideBar"
+
+// Material UI
+import { ThemeProvider } from "@material-ui/styles";
+import { Box, createMuiTheme, CssBaseline, Paper } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+// React Router
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { Autorenew } from "@material-ui/icons";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -32,9 +39,54 @@ const lightTheme = createMuiTheme({
   }
 });
 
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100vw - ${drawerWidth}px)`,
+    },
+  },
+}));
+
+
 export default function App() {
 
   const [user, setUser] = useState(localStorage.getItem("user"))
+  const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
 
   const fetchUser = () => {
 
@@ -56,6 +108,10 @@ export default function App() {
 
   console.log(`user from App component ${user}`);
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Router>
@@ -63,9 +119,12 @@ export default function App() {
       <CssBaseline/>
         <div className="App">
         <Paper >
-            <Box  height="80vh" display="flex"
-            flexDirection="column" alignItems="center"  borderRadius="0.5rem" >
-              <Header />
+            <Box display="flex"
+            borderRadius="0.5rem">
+              <Header handleDrawerToggle= {handleDrawerToggle} />
+              <Sidebar handleDrawerToggle= {handleDrawerToggle} mobileOpen = {mobileOpen} />
+              <main className={classes.content}>
+              <div className={classes.toolbar} />
               <Switch>
                 <Route exact path="/">
                   {user? <Home /> : <Redirect to= "/login"/>}
@@ -95,6 +154,7 @@ export default function App() {
                     {user? <Redirect to ="/" /> : <Register /> }
                 </Route>
               </Switch>         
+              </main>
             </Box>
           </Paper>
         </div>

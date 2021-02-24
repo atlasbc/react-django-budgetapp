@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import { AppBar, Toolbar, IconButton, Button, Link, Box } from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Logout from './Logout';
 import {UserContext} from './UserContext';
 
@@ -9,8 +10,47 @@ import {
     Link as RouterLink
   } from "react-router-dom";
 
-export default function Header() {
+  const drawerWidth = 240;
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    appBar: {
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+      },
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }));
+
+
+export default function Header(props) {
     const  {user}  = useContext(UserContext);
+    const classes = useStyles();
+    const {handleDrawerToggle} = props;
+    const theme = useTheme();
     console.log(`user from Header component ${user}`);
 
     // Some links must appear only if the user is authenticated TODO 
@@ -19,22 +59,27 @@ export default function Header() {
 
     return (
 
-            <AppBar position="static" style={{marginBottom:"1rem"}}>
-                <Toolbar variant="dense" disableGutters={true} style={{justifyContent: "space-between"}} >
-                <IconButton style= {{color:"#fff"}} >
-                    <MenuIcon/>
+            <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar disableGutters={true} style={{justifyContent: "space-between"}} >
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    className={classes.menuButton}
+                >
+                    <MenuIcon />
                 </IconButton>
-                <nav>
-                {user &&
+                {/* {user &&
                 <>
                 <Link component={RouterLink} to="/" color="inherit" style={{marginRight: "12px"}} >Home</Link>
                 <Link component={RouterLink} to="income" color="inherit" style={{marginRight: "12px"}} >Income</Link>
                 <Link component={RouterLink} to="transactions" color="inherit" style={{marginRight: "12px"}} >Transactions</Link>
                 <Link component={RouterLink} to="budget" color="inherit" style={{marginRight: "12px"}} >Budget</Link>
                 </>
-                }
+                } */}
 
-                <Link component={RouterLink} to="about" color="inherit" >About</Link>
+                {/* <Link component={RouterLink} to="about" color="inherit" >About</Link> */}
 
                 {user?<Logout />
                 :<>
@@ -48,7 +93,6 @@ export default function Header() {
                 }
 
                 {user? user: ""}
-                </nav>
                 </Toolbar>              
             </AppBar>
     )
