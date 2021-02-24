@@ -51,9 +51,9 @@ export default function Login() {
     return (
         <div>
             <form onSubmit={handleSubmit} autoComplete="off" style={{display: "flex"}} > 
-                <TextField label="Username" size="small" style={{width:"9rem" ,backgroundColor:"#fff"}} 
+                <TextField label="Username" size="small" style={{width:"9rem"}} 
                 variant="filled" required={true} ></TextField>
-                <TextField label="Password" type="password" size="small" style={{width:"9rem" ,backgroundColor:"#fff"}} 
+                <TextField label="Password" type="password" size="small" style={{width:"9rem"}} 
                 variant="filled"  required={true} ></TextField>
                 <Button color="primary" style={{borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} 
                 variant="contained" type="submit">Login</Button>

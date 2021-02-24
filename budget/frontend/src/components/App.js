@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { render } from "react-dom";
 import "./App.css";
-import { Box, createMuiTheme, CssBaseline } from '@material-ui/core';
+import { Box, createMuiTheme, CssBaseline, Paper } from '@material-ui/core';
 import Home from "./Home";
 import Header from "./Header";
 import About from "./About";
@@ -20,9 +20,15 @@ import {
   Redirect,
 } from "react-router-dom";
 
-const theme = createMuiTheme({
+const darkTheme = createMuiTheme({
   palette: {
     type: "dark"
+  }
+});
+
+const lightTheme = createMuiTheme({
+  palette: {
+    type: "light"
   }
 });
 
@@ -53,42 +59,44 @@ export default function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Router>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
         <div className="App">
-          <Box mx="auto" py="4rem" width="50%" height="80vh" display="flex" color="#fff"
-          flexDirection="column" alignItems="center"  borderRadius="0.5rem" >
-            <Header />
-            <Switch>
-              <Route exact path="/">
-                {user? <Home /> : <Redirect to= "/login"/>}
-              </Route>
+        <Paper >
+            <Box  height="80vh" display="flex"
+            flexDirection="column" alignItems="center"  borderRadius="0.5rem" >
+              <Header />
+              <Switch>
+                <Route exact path="/">
+                  {user? <Home /> : <Redirect to= "/login"/>}
+                </Route>
 
-              <Route path="/income">
-              {user? <Income /> : <Redirect to= "/login"/>}
-              </Route>
+                <Route path="/income">
+                {user? <Income /> : <Redirect to= "/login"/>}
+                </Route>
 
-              <Route path="/transactions">
-              {user? <Transactions /> : <Redirect to= "/login"/>}
-                  
-              </Route>
+                <Route path="/transactions">
+                {user? <Transactions /> : <Redirect to= "/login"/>}
+                    
+                </Route>
 
-              <Route  path="/budget">
-              {user? <Budget /> : <Redirect to= "/login"/>}
-              </Route>
+                <Route  path="/budget">
+                {user? <Budget /> : <Redirect to= "/login"/>}
+                </Route>
 
-              <Route  path="/about">
-                  <About />
-              </Route>
-              
-              <Route  path="/login">
-                  {user? <Redirect to ="/" /> : <Login /> }
-              </Route>
-              <Route  path="/register">
-                  {user? <Redirect to ="/" /> : <Register /> }
-              </Route>
-            </Switch>         
-          </Box>
+                <Route  path="/about">
+                    <About />
+                </Route>
+                
+                <Route  path="/login">
+                    {user? <Redirect to ="/" /> : <Login /> }
+                </Route>
+                <Route  path="/register">
+                    {user? <Redirect to ="/" /> : <Register /> }
+                </Route>
+              </Switch>         
+            </Box>
+          </Paper>
         </div>
         </ThemeProvider>
       </Router>
