@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  paper:{
+    width: `100%`
+  },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -74,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    width: "100%",
     [theme.breakpoints.up('sm')]: {
       width: `calc(100vw - ${drawerWidth}px)`,
     },
@@ -118,7 +122,7 @@ export default function App() {
       <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
         <div className="App">
-        <Paper >
+        <Paper className={classes.paper}>
             <Box display="flex"
             borderRadius="0.5rem">
               <Header handleDrawerToggle= {handleDrawerToggle} />

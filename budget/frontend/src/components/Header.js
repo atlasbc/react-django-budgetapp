@@ -13,9 +13,6 @@ import {
   const drawerWidth = 240;
 
   const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-    },
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
@@ -34,15 +31,6 @@ import {
         display: 'none',
       },
     },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
   }));
 
 
@@ -52,10 +40,6 @@ export default function Header(props) {
     const {handleDrawerToggle} = props;
     const theme = useTheme();
     console.log(`user from Header component ${user}`);
-
-    // Some links must appear only if the user is authenticated TODO 
-    //const dynamic_links = 
-    
 
     return (
 
@@ -81,6 +65,9 @@ export default function Header(props) {
 
                 {/* <Link component={RouterLink} to="about" color="inherit" >About</Link> */}
 
+                <span style={{margin: "0 0.5rem"}}>
+                {user? user: ""}
+                </span>
                 {user?<Logout />
                 :<>
                 <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
@@ -92,7 +79,7 @@ export default function Header(props) {
                 </>
                 }
 
-                {user? user: ""}
+                
                 </Toolbar>              
             </AppBar>
     )

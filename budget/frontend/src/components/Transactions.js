@@ -2,11 +2,62 @@ import React, {useState, useEffect} from 'react'
 import { Button, TextField, Select, MenuItem } from '@material-ui/core';
 import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      [theme.breakpoints.up('sm')]: {
+        flexDirection: "row",
+      },
+    },
+    formItem: {
+        width: "100%",
+        [theme.breakpoints.up('md')]: {
+            width: "10rem",
+          },
+    },
+    submitButton: {
+        width: "10rem",
+        alignSelf: "center",
+        marginTop: "0.5rem",
+        [theme.breakpoints.up('sm')]: {
+            width:"8rem", 
+            borderTopLeftRadius:"0", 
+            borderBottomLeftRadius:"0",
+            alignSelf: "stretch",
+            margin: "0"
+          },        
+    },
+    header: {
+        textAlign: "center",
+    }
+  }));
+
+// const columns = [
+//     { field: 'name', headerName: 'Name', width: 130, sortable: false },
+//     {
+//         field: 'amount',
+//         headerName: 'Amount',
+//         type: 'number',
+//         width: 90,
+//     },
+//     { field: 'category', headerName: 'Category', width: 130},
+//     {
+//         field: 'created_at',
+//         headerName: 'Date',
+//         type: 'date',
+//         width: 90,
+//     },
+// ];
 
 export default function Transactions() {
     const [transactionData, setTransactionData] = useState([])
     const [category, setCategory] = useState("")
     const csrftoken = Cookies.get('csrftoken');
+    const classes = useStyles();
 
     // View for income data
     useEffect(() => {
@@ -101,20 +152,20 @@ export default function Transactions() {
     return (
         <div>
             <div>
-                <h2>Add New Transaction</h2>
-                <form onSubmit={handleSubmit} autoComplete="off" style={{marginBottom:"1rem", display:"flex"}}>
-                    <TextField label="Name" size="small" style={{width:"6rem"}} variant="filled" required={true} ></TextField>
-                    <TextField label="$" size="small" style={{width:"6rem"}} variant="filled" required={true} ></TextField>
-                    <Select value={category} variant="filled" margin="dense" style={{width:"6rem"}} onChange={handleChange} required={true}>
+                <h2 className={classes.header}>Add New Transaction</h2>
+                <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
+                    <TextField label="Name" size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
+                    <TextField label="$" size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
+                    <Select value={category} variant="filled" margin="dense" className={classes.formItem} onChange={handleChange} required={true}>
                         <MenuItem value='Grocery'>Grocery</MenuItem>
                         <MenuItem value='Bills & Utilities'>Bills & Utilities</MenuItem>
                         <MenuItem value='Entertainment'>Entertainment</MenuItem>
                         <MenuItem value='Other'>Other</MenuItem>
                     </Select>
-                    <Button color="primary" style={{width:"8rem", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
+                    <Button color="primary" className={classes.submitButton} variant="contained" type="submit">Submit</Button>
                 </form>
             </div>
-            <h2>Your Transaction Data</h2>
+            <h2 className={classes.header}>Your Transaction Data</h2>
             <ul>
             {transactions}
             </ul>
