@@ -3,6 +3,7 @@ import { Button, TextField, Select, MenuItem } from '@material-ui/core';
 import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -36,22 +37,22 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-// const columns = [
-//     { field: 'name', headerName: 'Name', width: 130, sortable: false },
-//     {
-//         field: 'amount',
-//         headerName: 'Amount',
-//         type: 'number',
-//         width: 90,
-//     },
-//     { field: 'category', headerName: 'Category', width: 130},
-//     {
-//         field: 'created_at',
-//         headerName: 'Date',
-//         type: 'date',
-//         width: 90,
-//     },
-// ];
+const columns = [
+    { field: 'name', headerName: 'Name', width: 200, sortable: false },
+    {
+        field: 'amount',
+        headerName: 'Amount',
+        type: 'number',
+        width: 120,
+    },
+    { field: 'category', headerName: 'Category', width: 130},
+    {
+        field: 'created_at',
+        headerName: 'Date',
+        type: 'date',
+        width: 130,
+    },
+];
 
 export default function Transactions() {
     const [transactionData, setTransactionData] = useState([])
@@ -141,13 +142,15 @@ export default function Transactions() {
     }
 
 
-    const transactions = transactionData.map(transaction => {
-        return (<li style={{margin: "9px 0"}} key= {transaction.id}>
-                {`${transaction.name}: $${transaction.amount}  || ${transaction.category}`}
-                <Delete fontSize="small" onClick={() => handleDelete(transaction.id)} cursor="pointer" />
-                {`~ ${transaction.created_at}`}
-                </li>)
-    })
+    // const transactions = transactionData.map(transaction => {
+    //     return (<li style={{margin: "9px 0"}} key= {transaction.id}>
+    //             {`${transaction.name}: $${transaction.amount}  || ${transaction.category}`}
+    //             <Delete fontSize="small" onClick={() => handleDelete(transaction.id)} cursor="pointer" />
+    //             {`~ ${transaction.created_at}`}
+    //             </li>)
+    // })
+
+    const transactions = <DataGrid rows={transactionData} columns={columns} pageSize={5} />
 
     return (
         <div>
@@ -166,9 +169,12 @@ export default function Transactions() {
                 </form>
             </div>
             <h2 className={classes.header}>Your Transaction Data</h2>
-            <ul>
+            {/* <ul>
             {transactions}
-            </ul>
+            </ul> */}
+            <div style={{height: 375, width:"100%", display: "flex"}}>
+            {transactions}
+            </div>
         </div>
     )
 }
