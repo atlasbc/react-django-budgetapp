@@ -34,25 +34,16 @@ const useStyles = makeStyles((theme) => ({
     },
     header: {
         textAlign: "center",
+    },
+    columnSeparator: {
+        opacity: 0,
     }
   }));
 
-const columns = [
-    { field: 'name', headerName: 'Name', width: 200, sortable: false },
-    {
-        field: 'amount',
-        headerName: 'Amount',
-        type: 'number',
-        width: 120,
-    },
-    { field: 'category', headerName: 'Category', width: 130},
-    {
-        field: 'created_at',
-        headerName: 'Date',
-        type: 'date',
-        width: 130,
-    },
-];
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
 
 export default function Transactions() {
     const [transactionData, setTransactionData] = useState([])
@@ -141,6 +132,42 @@ export default function Transactions() {
         .catch(er => console.log(er))
     }
 
+    const columns = [
+        { field: "id", hide: true},
+        { field: 'name', headerName: 'Name', width: 200, sortable: false },
+        {
+            field: 'amount',
+            headerName: 'Amount',
+            type: 'number',
+            valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+            width: 120,
+        },
+        { field: 'category', headerName: 'Category', width: 130},
+        {
+            field: 'created_at',
+            headerName: 'Date',
+            type: 'date',
+            width: 130,
+        },
+        {
+            field: "delete",
+            headerName: 'Delete',
+            width: 30,
+            disableColumnMenu: true,
+            align: "center",
+            filterable: false,
+            sortable: false,
+            headerClassName: classes.columnSeparator,
+            renderCell: (params) => (
+                <>
+                {console.log(params)}
+                {console.log(params.row.id)}
+                <Delete fontSize="small" onClick={() => handleDelete(params.row.id)} cursor="pointer" />
+                </>
+            )
+    
+        }
+    ];    
 
     // const transactions = transactionData.map(transaction => {
     //     return (<li style={{margin: "9px 0"}} key= {transaction.id}>
@@ -150,10 +177,10 @@ export default function Transactions() {
     //             </li>)
     // })
 
-    const transactions = <DataGrid rows={transactionData} columns={columns} pageSize={5} />
+    const transactions = <DataGrid rows={transactionData} columns={columns} pageSize={5} disableSelectionOnClick />
 
     return (
-        <div>
+        <>
             <div>
                 <h2 className={classes.header}>Add New Transaction</h2>
                 <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
@@ -172,9 +199,9 @@ export default function Transactions() {
             {/* <ul>
             {transactions}
             </ul> */}
-            <div style={{height: 375, width:"100%", display: "flex"}}>
+            <div style={{height: 430, width:"100%",  maxWidth:"800px", display: "flex"}}>
             {transactions}
             </div>
-        </div>
+        </>
     )
 }
