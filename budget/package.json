@@ -31,6 +31,7 @@
     "@material-ui/data-grid": "^4.0.0-alpha.21",
     "@material-ui/icons": "^4.11.2",
     "js-cookie": "^2.2.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "recharts": "^2.0.8"
   }
 }

@@ -1,8 +1,60 @@
-import React, {useState, useEffect} from 'react'
+import { useTheme } from '@material-ui/core/styles';
+import React, {useState, useEffect} from 'react';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList } from 'recharts';
+
+
+
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+const colors = ["#3f51b5","#009688", "#673ab7", "#ff5722"]
 
 export default function Home() {
     const [total, setTotal] = useState(null);
+    const [transactionData, setTransactionData] = useState([])
+    const theme = useTheme();
 
+    // const dummyData = [
+    //     { category: 'Group A', amount: 10000 },
+    //     { category: 'Group B', amount: 300 },
+    //     { category: 'Group C', amount: 300 },
+    //     { category: 'Group D', amount: 200 },
+    //   ];
+
+      const dummyData = [
+        { category: 'Group A', amount: 600 },
+        { category: 'Group B', amount: 300 },
+        { category: 'Group C', amount: 300 },
+        { category: 'Group D', amount: 200 },
+      ];      
+
+
+      const renderCustomizedLabel = (props) => {
+        const {cx, cy, x, y, percent, value, index, name } = props;
+      
+        return (
+            <>
+            <text x ={x + 25} y={y} dy={-20} fill={theme.palette.text.primary} dominantBaseline="central" >
+              {name}
+            </text>
+            <text x ={ x } y={y} fill={theme.palette.text.primary} dominantBaseline="central" >
+                {currencyFormatter.format(Number(value))} - {(percent*100).toFixed(1)}%
+            </text>
+            {/* <text x ={x} y={y} dy={-10} fill={theme.palette.text.primary} dominantBaseline="central" >
+              {value}
+            </text> */}
+            </>
+        );
+      };
+    
+    const initialValue = 0
+    const sum = dummyData.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.amount
+        , initialValue
+    )
+    console.log(sum);
     // View for total
     useEffect(() => {
         fetch('/home-request')
@@ -13,19 +65,42 @@ export default function Home() {
         })
         .catch(error => console.log(error))
 
-        
+        fetch('/api/transactions')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            setTransactionData(data);
+        })
+        .catch(error => console.log(error))
+
         return () => {
             console.log("effect clean? || Home");
         }
-    }, [])    
-
+    }, [])
 
 
     return (
         <>
-            <div>Total = ${total}</div>
-            <div>Income Viz</div>
-            <div>Transaction Viz</div>
+            <h1>Total = {currencyFormatter.format(Number(total))}</h1>
+            <div>
+                <h2 style={{textAlign:"center"}}>Transaction according to Categories</h2>
+                <PieChart width={600} height={300} >
+                    <Pie data={dummyData} dataKey="amount" nameKey="category" isAnimationActive={false}
+                    cx={"50%"} cy={"50%"} innerRadius={50} outerRadius={90} fill={theme.palette.primary.main}
+                    label = {renderCustomizedLabel} >
+                        {/* <LabelList dataKey="category" position="outside" offset={10}
+                        fontWeight={theme.typography.fontWeightLight} stroke={theme.palette.text.primary} /> */}
+                        {/* <LabelList dataKey="amount" position="top" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
+                        fontWeight={theme.typography.fontWeightLight}/> */}
+                        {
+                        dummyData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={colors[index]}/>
+                        ))
+                        }                        
+                    </Pie>
+                    
+                </PieChart>
+            </div>
         </>
     )
 }
