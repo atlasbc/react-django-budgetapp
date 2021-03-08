@@ -52,7 +52,7 @@ class Income(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="income")
     category = models.CharField(max_length=100, choices=INCOME_CHOICES)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(default=date.today)
 
 
 class Transaction(models.Model):
@@ -61,7 +61,10 @@ class Transaction(models.Model):
     category = models.CharField(max_length=100, choices=SPENDING_CHOICES)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="transactions")
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(default=date.today)
+
+    def __str__(self):
+        return f"{self.name} - {self.amount} by {self.user} on {self.created_at}"
 
 
 class Budget(models.Model):
