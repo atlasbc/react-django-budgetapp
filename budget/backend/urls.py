@@ -16,6 +16,8 @@ urlpatterns = [
          views.TransactionDelete.as_view(), name="transactions_delete"),
     path("api/transactions/<int:pk>/update/",
          views.TransactionUpdate.as_view(), name="transactions_update"),
+    path("api/transactions/categories", views.TransactionListCategories.as_view(),
+         name="transaction_categories"),
     # User API
     path("api/user/", views.UserListCreate.as_view(), name="user"),
     path("api/user/<int:pk>/", views.UserDetail.as_view(), name="user_detail"),

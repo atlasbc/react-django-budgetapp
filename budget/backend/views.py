@@ -10,8 +10,9 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics
+from rest_framework.views import APIView
 # from rest_framework import status
-# from rest_framework.response import Response
+from rest_framework.response import Response as RestResponse
 
 #####################################################
 ########### AUTHENTICATION RELATED VIEWS ############
@@ -209,6 +210,15 @@ class TransactionListCreate(generics.ListCreateAPIView):
         category = data.get('category')
         serializer.save(user=self.request.user, name=name, amount=amount,
                         category=category)
+
+
+class TransactionListCategories(APIView):
+
+    def get(self, request):
+        user = self.request.user
+        category_sum = RestResponse(user.transactions.values('category')
+                                    .annotate(data_sum=Sum('amount')))
+        return category_sum
 
 
 class TransactionDelete(generics.DestroyAPIView):
