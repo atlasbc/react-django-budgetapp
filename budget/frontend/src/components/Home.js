@@ -20,14 +20,7 @@ export default function Home() {
     //     { category: 'Group B', amount: 300 },
     //     { category: 'Group C', amount: 300 },
     //     { category: 'Group D', amount: 200 },
-    //   ];
-
-      const dummyData = [
-        { category: 'Group A', amount: 600 },
-        { category: 'Group B', amount: 300 },
-        { category: 'Group C', amount: 80 },
-        { category: 'Group D', amount: 40 },
-      ];      
+    //   ]; 
 
 
       const renderCustomizedLabel = (props) => {
@@ -46,8 +39,8 @@ export default function Home() {
       };
     
     const initialValue = 0
-    const sum = dummyData.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.amount
+    const sum = transactionData.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.data_sum
         , initialValue
     )
     console.log(sum);
@@ -61,7 +54,7 @@ export default function Home() {
         })
         .catch(error => console.log(error))
 
-        fetch('/api/transactions')
+        fetch('/api/transactions/categories')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -81,10 +74,10 @@ export default function Home() {
             <h2 >Transaction according to Categories</h2>
             <ResponsiveContainer width={'100%'} height={300} >
                 <PieChart margin={{top: 0, right: 30, left: 30, bottom: 0}} >
-                    <Pie data={dummyData} dataKey="amount" nameKey="category" isAnimationActive={false}
+                    <Pie data={transactionData} dataKey="data_sum" nameKey="category" isAnimationActive={false}
                     cx={"50%"} cy={"50%"} innerRadius="30%" outerRadius="60%" fill={theme.palette.primary.main}
                     label = {renderCustomizedLabel} >
-                        <LabelList dataKey="amount" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
+                        <LabelList dataKey="data_sum" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
                         fontWeight={theme.typography.fontWeightLight}/>
                         {
                         dummyData.map((entry, index) => (
