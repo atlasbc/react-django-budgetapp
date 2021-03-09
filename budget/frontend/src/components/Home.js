@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList } from 'recharts';
 
 
-
 const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -26,8 +25,8 @@ export default function Home() {
       const dummyData = [
         { category: 'Group A', amount: 600 },
         { category: 'Group B', amount: 300 },
-        { category: 'Group C', amount: 300 },
-        { category: 'Group D', amount: 200 },
+        { category: 'Group C', amount: 80 },
+        { category: 'Group D', amount: 40 },
       ];      
 
 
@@ -36,15 +35,12 @@ export default function Home() {
       
         return (
             <>
-            <text x ={x + 25} y={y} dy={-20} fill={theme.palette.text.primary} dominantBaseline="central" >
+            <text x ={cx > x ? x - 35: x} y={cy < y ? y + 35: y} dy={-20} fill={theme.palette.text.primary} dominantBaseline="central" >
               {name}
             </text>
-            <text x ={ x } y={y} fill={theme.palette.text.primary} dominantBaseline="central" >
-                {currencyFormatter.format(Number(value))} - {(percent*100).toFixed(1)}%
+            <text x ={cx > x ? x - 35: x } y={cy < y ? y + 35: y} fill={theme.palette.text.primary} dominantBaseline="central" >
+                {currencyFormatter.format(Number(value))}
             </text>
-            {/* <text x ={x} y={y} dy={-10} fill={theme.palette.text.primary} dominantBaseline="central" >
-              {value}
-            </text> */}
             </>
         );
       };
@@ -80,27 +76,24 @@ export default function Home() {
 
 
     return (
-        <>
+        <div style={{textAlign:"center", width:"100%", height:"100%"}}>
             <h1>Total = {currencyFormatter.format(Number(total))}</h1>
-            <div>
-                <h2 style={{textAlign:"center"}}>Transaction according to Categories</h2>
-                <PieChart width={600} height={300} >
+            <h2 >Transaction according to Categories</h2>
+            <ResponsiveContainer width={'100%'} height={300} >
+                <PieChart margin={{top: 0, right: 30, left: 30, bottom: 0}} >
                     <Pie data={dummyData} dataKey="amount" nameKey="category" isAnimationActive={false}
-                    cx={"50%"} cy={"50%"} innerRadius={50} outerRadius={90} fill={theme.palette.primary.main}
+                    cx={"50%"} cy={"50%"} innerRadius="30%" outerRadius="60%" fill={theme.palette.primary.main}
                     label = {renderCustomizedLabel} >
-                        {/* <LabelList dataKey="category" position="outside" offset={10}
-                        fontWeight={theme.typography.fontWeightLight} stroke={theme.palette.text.primary} /> */}
-                        {/* <LabelList dataKey="amount" position="top" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
-                        fontWeight={theme.typography.fontWeightLight}/> */}
+                        <LabelList dataKey="amount" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
+                        fontWeight={theme.typography.fontWeightLight}/>
                         {
                         dummyData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={colors[index]}/>
                         ))
                         }                        
                     </Pie>
-                    
                 </PieChart>
-            </div>
-        </>
+            </ResponsiveContainer>
+        </div>
     )
 }

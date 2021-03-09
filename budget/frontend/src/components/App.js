@@ -44,6 +44,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '100%',
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -123,8 +124,7 @@ export default function App() {
       <CssBaseline/>
         <div className="App">
         <Paper className={classes.paper}>
-            <Box display="flex"
-            borderRadius="0.5rem">
+            <Box className={classes.root}>
               <Header handleDrawerToggle= {handleDrawerToggle} />
               <Sidebar handleDrawerToggle= {handleDrawerToggle} mobileOpen = {mobileOpen} />
               <main className={classes.content}>
