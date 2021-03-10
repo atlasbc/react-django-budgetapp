@@ -3,12 +3,47 @@ import { Button, TextField, Select, MenuItem } from '@material-ui/core';
 import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid } from '@material-ui/data-grid';
 
-const useStyles = makeStyles({
-    root: {
-      background: '#dddddd',
+const useStyles = makeStyles((theme) => ({
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      [theme.breakpoints.up('sm')]: {
+        flexDirection: "row",
+      },
     },
-  });
+    formItem: {
+        width: "100%",
+        [theme.breakpoints.up('md')]: {
+            width: "10rem",
+          },
+    },
+    submitButton: {
+        width: "10rem",
+        alignSelf: "center",
+        marginTop: "0.5rem",
+        [theme.breakpoints.up('sm')]: {
+            width:"8rem", 
+            borderTopLeftRadius:"0", 
+            borderBottomLeftRadius:"0",
+            alignSelf: "stretch",
+            margin: "0"
+          },        
+    },
+    header: {
+        textAlign: "center",
+    },
+    columnSeparator: {
+        opacity: 0,
+    }
+  }));
+
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
 
 export default function Income() {
     const [incomeData, setIncomeData] = useState([])
@@ -97,38 +132,66 @@ export default function Income() {
         .catch(er => console.log(er))
     }
 
+    const columns = [
+        { field: "id", hide: true},
+        { field: 'name', headerName: 'Name', width: 200, sortable: false },
+        {
+            field: 'amount',
+            headerName: 'Amount',
+            type: 'number',
+            valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+            width: 120,
+        },
+        { field: 'category', headerName: 'Category', width: 130},
+        {
+            field: 'created_at',
+            headerName: 'Date',
+            type: 'date',
+            width: 130,
+        },
+        {
+            field: "delete",
+            headerName: 'Delete',
+            width: 30,
+            disableColumnMenu: true,
+            align: "center",
+            filterable: false,
+            sortable: false,
+            headerClassName: classes.columnSeparator,
+            renderCell: (params) => (
+                <>
+                {console.log(params)}
+                {console.log(params.row.id)}
+                <Delete fontSize="small" onClick={() => handleDelete(params.row.id)} cursor="pointer" />
+                </>
+            )
+    
+        }
+    ];
 
-    const income = incomeData.map(inc => {
-        return (<li style={{margin: "9px 0"}} key= {inc.id}>
-                {`${inc.name}: $${inc.amount} || ${inc.category}`}
-                <Delete fontSize="small" onClick={() => handleDelete(inc.id)} cursor="pointer" />
-                {`~ ${inc.created_at}`}
-                </li>)
-    })
+    const income = <DataGrid rows={incomeData} columns={columns} pageSize={5} disableSelectionOnClick />
 
     return (
-        <div>
+        <>
             <div>
-                <h2>Add New Income</h2>
-                <form onSubmit={handleSubmit} autoComplete="off" style={{margin:"1rem 0", display:"flex"}}>
-                    <TextField label="Name"  size="small" style={{width:"6rem" }} variant="filled" required={true} ></TextField>
-                    <TextField label="$"  size="small" style={{width:"6rem" }} variant="filled" required={true} ></TextField>
-                    {/* <TextField label="Category" size="small" style={{width:"6rem" ,backgroundColor:"#fff"}} variant="filled" required={true} >
-                    </TextField> */}
-                    <Select name="Category"  label="Category" value={category} variant="filled" style={{width:"6rem", borderRadius:"0"}} 
+                <h2 className={classes.header}>Add New Income</h2>
+                <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
+                    <TextField label="Name"  size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
+                    <TextField label="$"  size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
+                    <Select name="Category"  label="Category" value={category} variant="filled" className={classes.formItem} 
                     onChange={handleChange} required={true} margin="dense">
                         <MenuItem value='Salary'>Salary</MenuItem>
                         <MenuItem value='Side'>Side</MenuItem>
                         <MenuItem value='Bonus'>Bonus</MenuItem>
                         <MenuItem value='Other'>Other</MenuItem>
                     </Select>
-                    <Button color="primary" disableRipple={true} style={{width:"8rem", borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}} variant="contained" type="submit">Submit</Button>
+                    <Button color="primary" disableRipple={true} className={classes.submitButton} variant="contained" type="submit">Submit</Button>
                 </form>
             </div>
-            <h2>Your Income Data</h2>
-            <ul>
+            <h2 className={classes.header}>Your Income Data</h2>
+            <div style={{height: 430, width:"100%",  maxWidth:"800px", display: "flex"}}>
             {income}
-            </ul>
-        </div>
+            </div>
+        </>
     )
 }

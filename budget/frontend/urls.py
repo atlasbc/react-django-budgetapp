@@ -8,6 +8,6 @@ urlpatterns = [
     path('income', views.index),
     path('login', views.index),
     path('transactions', views.index),
-    path('budget', views.index),
+    # path('budget', views.index),
     path('register', views.index),
 ]

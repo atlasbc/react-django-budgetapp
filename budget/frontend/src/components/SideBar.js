@@ -69,9 +69,9 @@ function SideBar(props) {
                 <ListItem>
                 <Link component={RouterLink} to="transactions" color="inherit" style={{marginRight: "12px"}} >Transactions</Link>
                 </ListItem>
-                <ListItem>
+                {/* <ListItem>
                 <Link component={RouterLink} to="budget" color="inherit" style={{marginRight: "12px"}} >Budget</Link>
-                </ListItem>
+                </ListItem> */}
                 <ListItem>
                 <Link component={RouterLink} to="about" color="inherit" >About</Link>
                 </ListItem>

@@ -169,14 +169,6 @@ export default function Transactions() {
         }
     ];    
 
-    // const transactions = transactionData.map(transaction => {
-    //     return (<li style={{margin: "9px 0"}} key= {transaction.id}>
-    //             {`${transaction.name}: $${transaction.amount}  || ${transaction.category}`}
-    //             <Delete fontSize="small" onClick={() => handleDelete(transaction.id)} cursor="pointer" />
-    //             {`~ ${transaction.created_at}`}
-    //             </li>)
-    // })
-
     const transactions = <DataGrid rows={transactionData} columns={columns} pageSize={5} disableSelectionOnClick />
 
     return (
@@ -192,7 +184,7 @@ export default function Transactions() {
                         <MenuItem value='Entertainment'>Entertainment</MenuItem>
                         <MenuItem value='Other'>Other</MenuItem>
                     </Select>
-                    <Button color="primary" className={classes.submitButton} variant="contained" type="submit">Submit</Button>
+                    <Button color="primary" disableRipple={true} className={classes.submitButton} variant="contained" type="submit">Submit</Button>
                 </form>
             </div>
             <h2 className={classes.header}>Your Transaction Data</h2>

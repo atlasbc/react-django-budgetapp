@@ -143,9 +143,9 @@ export default function App() {
                     
                 </Route>
 
-                <Route  path="/budget">
+                {/* <Route  path="/budget">
                 {user? <Budget /> : <Redirect to= "/login"/>}
-                </Route>
+                </Route> */}
 
                 <Route  path="/about">
                     <About />

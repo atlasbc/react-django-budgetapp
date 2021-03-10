@@ -216,6 +216,7 @@ class TransactionListCategories(APIView):
 
     def get(self, request):
         user = self.request.user
+        print(request)
         category_sum = RestResponse(user.transactions.values('category')
                                     .annotate(data_sum=Sum('amount')))
         return category_sum
