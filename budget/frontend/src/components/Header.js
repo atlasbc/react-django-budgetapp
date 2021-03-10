@@ -10,15 +10,9 @@ import {
     Link as RouterLink
   } from "react-router-dom";
 
-  const drawerWidth = 240;
+  const drawerWidth = 160;
 
   const useStyles = makeStyles((theme) => ({
-    drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
     appBar: {
       [theme.breakpoints.up('sm')]: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -26,11 +20,20 @@ import {
       },
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(0.5),
       [theme.breakpoints.up('sm')]: {
         display: 'none',
       },
     },
+    userContainer:{
+      marginLeft: theme.spacing(1)
+    },
+    authContainer: {
+      marginRight: theme.spacing(0.5)
+    },
+    authButtons: {
+      marginLeft: theme.spacing(1),
+    }
   }));
 
 
@@ -54,32 +57,22 @@ export default function Header(props) {
                 >
                     <MenuIcon />
                 </IconButton>
-                {/* {user &&
-                <>
-                <Link component={RouterLink} to="/" color="inherit" style={{marginRight: "12px"}} >Home</Link>
-                <Link component={RouterLink} to="income" color="inherit" style={{marginRight: "12px"}} >Income</Link>
-                <Link component={RouterLink} to="transactions" color="inherit" style={{marginRight: "12px"}} >Transactions</Link>
-                <Link component={RouterLink} to="budget" color="inherit" style={{marginRight: "12px"}} >Budget</Link>
-                </>
-                } */}
 
-                {/* <Link component={RouterLink} to="about" color="inherit" >About</Link> */}
-
-                <span style={{margin: "0 0.5rem"}}>
+                <span className={classes.userContainer}>
                 {user? user: ""}
                 </span>
+                <div className={classes.authContainer}> 
                 {user?<Logout />
-                :<>
-                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
+                : <>
+                <Button variant="outlined" size="small" color="inherit" >
                     <Link component={RouterLink} to="login" color="inherit" >Login</Link>
                 </Button>
-                <Button variant="outlined" size="small" color="inherit" style={{margin: "0 12px"}} >
-                    <Link component={RouterLink} to="register" color="inherit" >Register</Link>
+                <Button variant="outlined" size="small" color="inherit" className={classes.authButtons}>
+                    <Link component={RouterLink} to="register" color="inherit"  >Register</Link>
                 </Button>
                 </>
                 }
-
-                
+                </div>
                 </Toolbar>              
             </AppBar>
     )
