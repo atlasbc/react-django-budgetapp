@@ -80,7 +80,7 @@ export default function Home() {
                         <LabelList dataKey="data_sum" formatter={(value) => `${((value/sum)*100).toFixed(2)}%`}
                         fontWeight={theme.typography.fontWeightLight}/>
                         {
-                        dummyData.map((entry, index) => (
+                        transactionData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={colors[index]}/>
                         ))
                         }                        
