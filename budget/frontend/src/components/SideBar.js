@@ -62,11 +62,11 @@ function SideBar(props) {
                 {/* <ListItem>
                 <Link component={RouterLink} to="budget" color="inherit" style={{marginRight: "12px"}} >Budget</Link>
                 </ListItem> */}
-                <ListItem className={classes.listItem}>
-                <Link component={RouterLink} to="about" color="inherit" >About</Link>
-                </ListItem>
                 </>
-        }        
+        }
+        <ListItem className={classes.listItem}>
+                <Link component={RouterLink} to="about" color="inherit" >About</Link>
+        </ListItem>
       </List>
     </div>
   );
