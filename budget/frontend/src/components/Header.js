@@ -1,8 +1,10 @@
 import React, {useContext} from "react";
-import { AppBar, Toolbar, IconButton, Button, Link, Box } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Button, Link } from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import { makeStyles } from '@material-ui/core/styles';
 import Logout from './Logout';
 import {UserContext} from './UserContext';
 
@@ -40,8 +42,7 @@ import {
 export default function Header(props) {
     const  {user}  = useContext(UserContext);
     const classes = useStyles();
-    const {handleDrawerToggle} = props;
-    const theme = useTheme();
+    const {handleDrawerToggle, handleTheme, prefersDark} = props;
     console.log(`user from Header component ${user}`);
 
     return (
@@ -62,13 +63,17 @@ export default function Header(props) {
                 {user? user: ""}
                 </span>
                 <div className={classes.authContainer}> 
+                <IconButton onClick={handleTheme}>
+                  {prefersDark? <Brightness7Icon /> : <Brightness4Icon/> }
+                  
+                </IconButton>
                 {user?<Logout />
                 : <>
                 <Button variant="outlined" size="small" color="inherit" >
                     <Link component={RouterLink} to="login" color="inherit" >Login</Link>
                 </Button>
-                <Button variant="outlined" size="small" color="inherit" className={classes.authButtons}>
-                    <Link component={RouterLink} to="register" color="inherit"  >Register</Link>
+                <Button variant="contained" size="small" color="inherit" className={classes.authButtons}>
+                    <Link component={RouterLink} to="register" color="primary"  >Register</Link>
                 </Button>
                 </>
                 }
