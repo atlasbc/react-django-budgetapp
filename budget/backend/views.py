@@ -129,7 +129,7 @@ class IncomeListCreate(generics.ListCreateAPIView):
         user = self.request.user
         print(user)
         print(self.request.auth)
-        return user.income.all()
+        return user.income.all().order_by('-id')
 
     # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
     # Because it provides the user_id by selecting user from request
@@ -192,7 +192,7 @@ class TransactionListCreate(generics.ListCreateAPIView):
         user = self.request.user
         print(user)
         print(self.request.auth)
-        return user.transactions.all()
+        return user.transactions.all().order_by('-id')
 
     # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
     # Because it provides the user_id by selecting user from request
