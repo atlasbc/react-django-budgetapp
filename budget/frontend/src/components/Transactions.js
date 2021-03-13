@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { Button, TextField, Select, MenuItem } from '@material-ui/core';
-import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
-import { DataGrid } from '@material-ui/data-grid';
+import DecimalFormat from '../utils/DecimalFormat';
+import TransactionTable from './TransactionTable';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -40,49 +40,35 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-  const currencyFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-
 export default function Transactions() {
     const [transactionData, setTransactionData] = useState([])
     const [category, setCategory] = useState("")
+    const [money, setMoney] = useState("")
+
     const csrftoken = Cookies.get('csrftoken');
     const classes = useStyles();
 
-    // View for income data
-    useEffect(() => {
-        fetch('/api/transactions')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            setTransactionData(data);
-        })
-        .catch(error => console.log(error))
-
-        
-        return () => {
-            console.log("effect clean?");
-        }
-    }, [])
-
     function handleSubmit(e){
         e.preventDefault();
-        console.log(e);
-
+        console.log(`money in submit is ${money}`);
         // Create new data
         const new_data = {
             name: e.target[0].value,
-            amount: e.target[1].value,
+            amount: parseFloat(money),
             category: e.target[2].value,
         }
         
+        console.log(`amount value to be sent to backend ${new_data["amount"]}`);
         
         // set spending text to zero after submitting
         e.target[0].value = "";
+        console.log(`target value ${e.target[1].value} before setting empty string`);
         e.target[1].value = "";
-        e.target[2].value = "";
+        console.log(`target value ${e.target[1].value} after setting empty string`);
+        // e.target[2].value = "";
+        setMoney("");
+        setCategory("");
+        
 
         // send data to server
         // I might use Context API for CSRF Token TODO
@@ -101,84 +87,34 @@ export default function Transactions() {
         .then(data => {
             console.log(data)
             // State is set here to receive id for data from server
-            setTransactionData([...transactionData, data]);
+            setTransactionData([data, ...transactionData]);
         })
         .catch(er => console.log(er))
     }
 
     // To make React only source of truth
-    function handleChange(e) {
+    function handleCategoryChange(e) {
         setCategory(e.target.value);
     }
 
-    function handleDelete(id){
-        console.log(id);
-        setTransactionData(transactionData.filter((transaction) => transaction.id !== id));
-        // Send request to server
-        fetch(`api/transactions/${id}/delete/`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
-            },
-            mode: 'same-origin'
-        })
-        .then(response => response.json()) // response
-        .then(data => {
-            // returns {"detail": "Not found."} if it fails
-            console.log(data)
-            // doesn't return any data if it is successfull, only 204 Response
-        })
-        .catch(er => console.log(er))
-    }
+    // This handles the value changed to send backend but doesn't affect formatting at all. TODO
 
-    const columns = [
-        { field: "id", hide: true},
-        { field: 'name', headerName: 'Name', width: 200, sortable: false },
-        {
-            field: 'amount',
-            headerName: 'Amount',
-            type: 'number',
-            valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-            width: 120,
-        },
-        { field: 'category', headerName: 'Category', width: 130},
-        {
-            field: 'created_at',
-            headerName: 'Date',
-            type: 'date',
-            width: 130,
-        },
-        {
-            field: "delete",
-            headerName: 'Delete',
-            width: 30,
-            disableColumnMenu: true,
-            align: "center",
-            filterable: false,
-            sortable: false,
-            headerClassName: classes.columnSeparator,
-            renderCell: (params) => (
-                <>
-                {console.log(params)}
-                {console.log(params.row.id)}
-                <Delete fontSize="small" onClick={() => handleDelete(params.row.id)} cursor="pointer" />
-                </>
-            )
-    
-        }
-    ];    
-
-    const transactions = <DataGrid rows={transactionData} columns={columns} pageSize={5} disableSelectionOnClick />
+    const handleMoneyChange = (event) => {
+        setMoney(
+            event.target.value,
+        );
+        console.log(`money is ${money}`);
+    };
 
     return (
         <>
             <div>
                 <h2 className={classes.header}>Add New Transaction</h2>
                 <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
-                    <TextField label="Name" size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
-                    <TextField label="$" size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
-                    <Select value={category} variant="filled" margin="dense" className={classes.formItem} onChange={handleChange} required={true}>
+                    <TextField label="Name" size="small" className={classes.formItem} variant="filled" required={true} type="text" ></TextField>
+                    <TextField label="$" size="small" className={classes.formItem} variant="filled" 
+                    required={true} onChange={handleMoneyChange}></TextField>
+                    <Select value={category} variant="filled" margin="dense" className={classes.formItem} onChange={handleCategoryChange} required={true}>
                         <MenuItem value='Grocery'>Grocery</MenuItem>
                         <MenuItem value='Bills & Utilities'>Bills & Utilities</MenuItem>
                         <MenuItem value='Entertainment'>Entertainment</MenuItem>
@@ -188,12 +124,7 @@ export default function Transactions() {
                 </form>
             </div>
             <h2 className={classes.header}>Your Transaction Data</h2>
-            {/* <ul>
-            {transactions}
-            </ul> */}
-            <div style={{height: 430, width:"100%",  maxWidth:"800px", display: "flex"}}>
-            {transactions}
-            </div>
+            <TransactionTable transactionData = {transactionData} setTransactionData = {setTransactionData}  />
         </>
     )
 }
