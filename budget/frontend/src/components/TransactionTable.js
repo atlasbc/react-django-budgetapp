@@ -5,9 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
-    header: {
-        textAlign: "center",
-    },
     columnSeparator: {
         opacity: 0,
     }
@@ -24,7 +21,7 @@ function TransactionTable(props) {
     const csrftoken = Cookies.get('csrftoken');
     const classes = useStyles();
 
-    // View for income data
+    // View for transaction data
     useEffect(() => {
         fetch('/api/transactions')
         .then(response => response.json())
