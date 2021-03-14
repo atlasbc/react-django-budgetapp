@@ -47,7 +47,7 @@ function TransactionForm(props) {
         // Create new data
         const new_data = {
             name: e.target[0].value,
-            amount: parseFloat(money),
+            amount: money,
             category: e.target[2].value,
         }
         
@@ -55,9 +55,8 @@ function TransactionForm(props) {
         
         // set spending text to zero after submitting
         e.target[0].value = "";
-        console.log(`target value ${e.target[1].value} before setting empty string`);
-        e.target[1].value = "";
-        console.log(`target value ${e.target[1].value} after setting empty string`);
+        // console.log(`target value ${e.target[1].value} before setting empty string`);
+        // console.log(`target value ${e.target[1].value} after setting empty string`);
         // e.target[2].value = "";
         setMoney("");
         setCategory("");
@@ -90,19 +89,24 @@ function TransactionForm(props) {
         setCategory(e.target.value);
     }
 
-    // This handles the value changed to send backend but doesn't affect formatting at all. TODO
+    // Max digit is 8, decimal place is 2 which means maximum is 999,999.99
 
     const handleMoneyChange = (event) => {
-        setMoney(
-            event.target.value,
-        );
+        const amount = event.target.value;
+
+        // Up to 6 number is allowed with or without 2 decimal point.
+        if (amount.match(/^(\d{1,6}|\d{1,8}\.\d{0,2})$/) || amount==""){
+            setMoney(
+                amount,
+            );
+        }
         console.log(`money is ${money}`);
     };
 
     return (
         <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
         <TextField label="Name" size="small" className={classes.formItem} variant="filled" required={true} type="text" ></TextField>
-        <TextField label="$" size="small" className={classes.formItem} variant="filled" 
+        <TextField label="$" size="small" className={classes.formItem} variant="filled" value ={money}
         required={true} onChange={handleMoneyChange}></TextField>
         <Select value={category} variant="filled" margin="dense" className={classes.formItem} onChange={handleCategoryChange} required={true}>
             <MenuItem value='Grocery'>Grocery</MenuItem>

@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function IncomeForm(props) {
     const {incomeData, setIncomeData} = props;
     const [category, setCategory] = useState("")
+    const [money, setMoney] = useState("")
 
     const csrftoken = Cookies.get('csrftoken');
     const classes = useStyles();
@@ -46,16 +47,16 @@ function IncomeForm(props) {
         // Create new data
         const new_data = {
             name: e.target[0].value,
-            amount: e.target[1].value,
+            amount: money,
             category: e.target[2].value, 
         }
         
         
         // set spending text to zero after submitting
         e.target[0].value = "";
-        e.target[1].value = "";
-        e.target[2].value = "";
 
+        setMoney("");
+        setCategory("");
         // send data to server
         // I might use Context API for CSRF Token TODO
         
@@ -83,10 +84,24 @@ function IncomeForm(props) {
         setCategory(e.target.value);
     }    
 
+    // STILL TODO
+    const handleMoneyChange = (event) => {
+        const amount = event.target.value;
+
+        // Up to 6 number is allowed with or without 2 decimal point.
+        if (amount.match(/^(\d{1,6}|\d{1,8}\.\d{0,2})$/) || amount==""){
+            setMoney(
+                amount,
+            );
+        }
+        console.log(`money is ${money}`);
+    }
+
     return (
         <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
         <TextField label="Name"  size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
-        <TextField label="$"  size="small" className={classes.formItem} variant="filled" required={true} ></TextField>
+        <TextField label="$"  size="small" className={classes.formItem} variant="filled" required={true} 
+        value ={money} onChange={handleMoneyChange}></TextField>
         <Select name="Category"  label="Category" value={category} variant="filled" className={classes.formItem} 
         onChange={handleChange} required={true} margin="dense">
             <MenuItem value='Salary'>Salary</MenuItem>
