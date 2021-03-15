@@ -1,5 +1,5 @@
-from .models import Dummy, Income, Transaction, Budget, User
-from .serializers import DummySerializer, IncomeSerializer, UserSerializer, TransactionSerializer
+from .models import Income, Transaction, Budget, User
+from .serializers import IncomeSerializer, UserSerializer, TransactionSerializer
 from django.db.models import Sum
 import json
 
@@ -23,10 +23,10 @@ from rest_framework.response import Response as RestResponse
 def login_view(request):
     # Uses CSRF Token
 
-    print(request)
-    print(request.body)
+    # print(request)
+    # print(request.body)
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     username = data.get("username")
     password = data.get('password')
 
@@ -55,10 +55,10 @@ def login_view(request):
 def register_view(request):
     # Uses CSRF Token
 
-    print(request)
-    print(request.body)
+    # print(request)
+    # print(request.body)
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     username = data.get("username")
     password = data.get('password')
     confirmation = data.get('confirmation')
@@ -112,9 +112,6 @@ def logout_view(request):
 #####################################################
 ################ API RELATED VIEWS ##################
 #####################################################
-class DummyListCreate(generics.ListCreateAPIView):
-    queryset = Dummy.objects.all()
-    serializer_class = DummySerializer
 
 ######### INCOME #########
 
@@ -127,8 +124,8 @@ class IncomeListCreate(generics.ListCreateAPIView):
         # with this POST doesnt work
         # ERROR: NOT NULL constraint failed: backend_income.user_id
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.income.all().order_by('-id')
 
     # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
@@ -138,8 +135,8 @@ class IncomeListCreate(generics.ListCreateAPIView):
         # rest-framework returns request body data via request.data
         # It also handles data being json object
         # BROWSABLE API STILL WORKS with this customization
-        print(self.request)
-        print(self.request.data)
+        # print(self.request)
+        # print(self.request.data)
         data = self.request.data
 
         name = data.get("name")
@@ -160,8 +157,8 @@ class IncomeDelete(generics.DestroyAPIView):
         # If you try to delete other people's income id
         # It returns "detail": "Not found."
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.income.all()
 
 
@@ -176,8 +173,8 @@ class IncomeUpdate(generics.UpdateAPIView):
         # If you try to delete other people's income id
         # It returns "detail": "Not found."
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.income.all()
 
 
@@ -190,8 +187,8 @@ class TransactionListCreate(generics.ListCreateAPIView):
         # with this POST doesnt work
         # ERROR: NOT NULL constraint failed: backend_income.user_id
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.transactions.all().order_by('-id')
 
     # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
@@ -201,8 +198,8 @@ class TransactionListCreate(generics.ListCreateAPIView):
         # rest-framework returns request body data via request.data
         # It also handles data being json object
         # BROWSABLE API STILL WORKS with this customization
-        print(self.request)
-        print(self.request.data)
+        # print(self.request)
+        # print(self.request.data)
         data = self.request.data
 
         name = data.get("name")
@@ -216,7 +213,7 @@ class TransactionListCategories(APIView):
 
     def get(self, request):
         user = self.request.user
-        print(request)
+        # print(request)
         category_sum = RestResponse(user.transactions.values('category')
                                     .annotate(data_sum=Sum('amount')))
         return category_sum
@@ -232,8 +229,8 @@ class TransactionDelete(generics.DestroyAPIView):
         # If you try to delete other people's income id
         # It returns "detail": "Not found."
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.transactions.all()
 
 
@@ -248,8 +245,8 @@ class TransactionUpdate(generics.UpdateAPIView):
         # If you try to delete other people's income id
         # It returns "detail": "Not found."
         user = self.request.user
-        print(user)
-        print(self.request.auth)
+        # print(user)
+        # print(self.request.auth)
         return user.transactions.all()
 
 ######### HOME #########
@@ -276,7 +273,7 @@ class UserListCreate(generics.ListCreateAPIView):
     # This returns data for logged user
     def get_queryset(self):
         user = self.request.user
-        print(user)
+        # print(user)
         return User.objects.filter(username=user)
 
 
