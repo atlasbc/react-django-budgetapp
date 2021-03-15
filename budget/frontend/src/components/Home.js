@@ -1,6 +1,6 @@
 import { useTheme } from '@material-ui/core/styles';
 import React, {useState, useEffect} from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, LabelList } from 'recharts';
 
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {

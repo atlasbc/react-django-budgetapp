@@ -46,8 +46,6 @@ export default function Register() {
                 console.log(data["success"]);
                 localStorage.setItem("user", data["user"])
                 setUser(data["user"]);
-                // TODO
-                // For some reason It doesn't update UI as authenticated user after registering.
             }
             else {
                 console.log(data["error"]);

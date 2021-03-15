@@ -114,7 +114,7 @@ export default function App() {
     })
   }
 
-  // Protective measure agains localStorage
+  // Protective measure against localStorage
   // It checks whether auth from localStorage is correct
   useEffect(() => {
     fetchUser();

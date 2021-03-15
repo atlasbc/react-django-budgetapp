@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { Button, TextField, Select, MenuItem } from '@material-ui/core';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
@@ -57,10 +57,9 @@ function IncomeForm(props) {
 
         setMoney("");
         setCategory("");
-        // send data to server
-        // I might use Context API for CSRF Token TODO
-        
 
+
+        // send data to server
         fetch('api/income/', {
             method: 'POST',
             headers: {
@@ -84,7 +83,6 @@ function IncomeForm(props) {
         setCategory(e.target.value);
     }    
 
-    // STILL TODO
     const handleMoneyChange = (event) => {
         const amount = event.target.value;
 

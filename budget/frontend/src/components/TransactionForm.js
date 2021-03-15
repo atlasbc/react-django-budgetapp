@@ -63,9 +63,6 @@ function TransactionForm(props) {
         
 
         // send data to server
-        // I might use Context API for CSRF Token TODO
-        
-
         fetch('api/transactions/', {
             method: 'POST',
             headers: {
@@ -89,11 +86,12 @@ function TransactionForm(props) {
         setCategory(e.target.value);
     }
 
-    // Max digit is 8, decimal place is 2 which means maximum is 999,999.99
+    
 
     const handleMoneyChange = (event) => {
         const amount = event.target.value;
 
+        // Max digit is 8, decimal place is 2 which means maximum is 999,999.99
         // Up to 6 number is allowed with or without 2 decimal point.
         if (amount.match(/^(\d{1,6}|\d{1,8}\.\d{0,2})$/) || amount==""){
             setMoney(

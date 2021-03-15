@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IncomeTable from './IncomeTable';
 import IncomeForm from './IncomeForm';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     header: {
         textAlign: "center",
     },

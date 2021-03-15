@@ -3,7 +3,7 @@ import {  Delete } from '@material-ui/icons';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     columnSeparator: {
         opacity: 0,
     }

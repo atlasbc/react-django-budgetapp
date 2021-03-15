@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TransactionTable from './TransactionTable';
 import TransactionForm from './TransactionForm';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     header: {
         textAlign: "center",
     },
