@@ -39,7 +39,7 @@ function TransactionTable(props) {
 
     function handleDelete(id){
         console.log(id);
-        setTransactionData(transactionData.filter((transaction) => transaction.id !== id));
+        
         // Send request to server
         fetch(`api/transactions/${id}/delete/`, {
             method: 'DELETE',
@@ -49,11 +49,15 @@ function TransactionTable(props) {
             },
             mode: 'same-origin'
         })
-        .then(response => response.json()) // response
+        .then(response => {response.json()}) // response
         .then(data => {
             // returns {"detail": "Not found."} if it fails
             console.log(`data after deleting an item ${data}`)
             // doesn't return any data if it is successfull, only 204 Response
+            if (!data){
+                console.log(`data has been deleted successfuly`);
+                setTransactionData(transactionData.filter((transaction) => transaction.id !== id));
+            }
         })
         .catch(er => console.log(er))
     }    

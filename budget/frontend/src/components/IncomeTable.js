@@ -38,7 +38,7 @@ function IncomeTable(props) {
 
     function handleDelete(id){
         console.log(id);
-        setIncomeData(incomeData.filter((income) => income.id !== id));
+        
         // Send request to server
         fetch(`api/income/${id}/delete/`, {
             method: 'DELETE',
@@ -48,10 +48,14 @@ function IncomeTable(props) {
             },
             mode: 'same-origin'
         })
-        .then(response => response.json()) // response
+        .then(response => {response.json()}) // response
         .then(data => {
             // returns {"detail": "Not found."} if it fails
             console.log(data)
+            if (!data){
+                console.log(`data has been deleted successfuly`);
+                setIncomeData(incomeData.filter((income) => income.id !== id));
+            }            
             // doesn't return any data if it is successfull, only 204 Response
         })
         .catch(er => console.log(er))

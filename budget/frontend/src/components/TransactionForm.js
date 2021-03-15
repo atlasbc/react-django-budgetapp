@@ -48,7 +48,7 @@ function TransactionForm(props) {
         const new_data = {
             name: e.target[0].value,
             amount: money,
-            category: e.target[2].value,
+            category: category,
         }
         
         console.log(`amount value to be sent to backend ${new_data["amount"]}`);
