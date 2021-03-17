@@ -121,20 +121,17 @@ class IncomeListCreate(generics.ListCreateAPIView):
 
     # This returns data for logged user
     def get_queryset(self):
-        # with this POST doesnt work
-        # ERROR: NOT NULL constraint failed: backend_income.user_id
         user = self.request.user
         # print(user)
         # print(self.request.auth)
         return user.income.all().order_by('-id')
 
-    # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
-    # Because it provides the user_id by selecting user from request
     def perform_create(self, serializer):
         # This request object belongs to rest-framework not Django
         # rest-framework returns request body data via request.data
         # It also handles data being json object
         # BROWSABLE API STILL WORKS with this customization
+
         # print(self.request)
         # print(self.request.data)
         data = self.request.data
@@ -157,6 +154,7 @@ class IncomeDelete(generics.DestroyAPIView):
         # If you try to delete other people's income id
         # It returns "detail": "Not found."
         user = self.request.user
+
         # print(user)
         # print(self.request.auth)
         return user.income.all()
@@ -184,20 +182,18 @@ class TransactionListCreate(generics.ListCreateAPIView):
 
     # This returns data for logged user
     def get_queryset(self):
-        # with this POST doesnt work
-        # ERROR: NOT NULL constraint failed: backend_income.user_id
+
         user = self.request.user
         # print(user)
         # print(self.request.auth)
         return user.transactions.all().order_by('-id')
 
-    # This solves the ERROR: NOT NULL constraint failed: backend_income.user_id
-    # Because it provides the user_id by selecting user from request
     def perform_create(self, serializer):
         # This request object belongs to rest-framework not Django
         # rest-framework returns request body data via request.data
         # It also handles data being json object
         # BROWSABLE API STILL WORKS with this customization
+
         # print(self.request)
         # print(self.request.data)
         data = self.request.data
