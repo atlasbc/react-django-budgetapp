@@ -1,1 +1,1 @@
-web: gunicorn budget.wsgi
+web: gunicorn budget.budget.wsgi
