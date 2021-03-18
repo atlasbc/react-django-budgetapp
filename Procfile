@@ -1,1 +1,1 @@
-web: gunicorn budget.budget.wsgi
+web: gunicorn --chdir budget budget.wsgi
