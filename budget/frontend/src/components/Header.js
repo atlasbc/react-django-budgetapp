@@ -69,12 +69,16 @@ export default function Header(props) {
                 </IconButton>
                 {user?<Logout />
                 : <>
-                <Button variant="outlined" size="small" color="inherit" >
-                    <Link component={RouterLink} to="login" color="inherit" >Login</Link>
-                </Button>
-                <Button variant="contained" size="small" color="inherit" className={classes.authButtons}>
-                    <Link component={RouterLink} to="register" color="primary"  >Register</Link>
-                </Button>
+                <Link component={RouterLink} to="login" color="inherit" >
+                  <Button variant="outlined" size="small" color="inherit" >
+                      Login
+                  </Button>
+                </Link>
+                <Link component={RouterLink} to="register" color="primary">
+                  <Button variant="contained" size="small" color="inherit" className={classes.authButtons}>
+                      Register
+                  </Button>
+                </Link>
                 </>
                 }
                 </div>
