@@ -11,17 +11,17 @@ export default function Login() {
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(e.target[0].value);
-        console.log(e.target[1].value);
+        // console.log(e.target[0].value);
+        // console.log(e.target[1].value);
         const username = e.target[0].value;
         const password = e.target[1].value;
         const data = {
             username,
             password
         }
-        console.log(data);
+        // console.log(data);
         const csrftoken = Cookies.get('csrftoken');
-        console.log(csrftoken);
+        // console.log(csrftoken);
 
         fetch('login-request', {
             method: 'POST',
@@ -34,14 +34,14 @@ export default function Login() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             if (data["success"]){
-                console.log(data["success"]);
+                // console.log(data["success"]);
                 localStorage.setItem("user", data["user"])
                 setUser(data["user"]);
             }
             else {
-                console.log(data["error"]);
+                // console.log(data["error"]);
                 setMessage(data["error"]);
             }
         })

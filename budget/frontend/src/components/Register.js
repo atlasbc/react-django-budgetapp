@@ -11,10 +11,10 @@ export default function Register() {
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(e.target[0].value);
-        console.log(e.target[1].value);
-        console.log(e.target[2].value);
-        console.log(e.target[3].value);
+        // console.log(e.target[0].value);
+        // console.log(e.target[1].value);
+        // console.log(e.target[2].value);
+        // console.log(e.target[3].value);
 
         const username = e.target[0].value;
         const password = e.target[1].value;
@@ -26,9 +26,9 @@ export default function Register() {
             confirmation,
             email
         }
-        console.log(data);
+        // console.log(data);
         const csrftoken = Cookies.get('csrftoken');
-        console.log(csrftoken);
+        // console.log(csrftoken);
 
         fetch('register-request', {
             method: 'POST',
@@ -41,14 +41,14 @@ export default function Register() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             if (data["success"]){
                 console.log(data["success"]);
                 localStorage.setItem("user", data["user"])
                 setUser(data["user"]);
             }
             else {
-                console.log(data["error"]);
+                // console.log(data["error"]);
                 setMessage(data["error"]);
                 if (data["bad-password"]){
                     e.target[1].value = "";
