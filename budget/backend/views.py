@@ -253,8 +253,9 @@ def home_view(request):
     if not user.is_authenticated:
         return JsonResponse({"error": "You are not logged in!"}, status=401)
 
-    income_sum = user.income.aggregate(Sum('amount'))['amount__sum']
-    transaction_sum = user.transactions.aggregate(Sum('amount'))['amount__sum']
+    income_sum = user.income.aggregate(Sum('amount'))['amount__sum'] or 0
+    transaction_sum = user.transactions.aggregate(Sum('amount'))[
+        'amount__sum'] or 0
     total = income_sum - transaction_sum
 
     return JsonResponse({"total": total})
