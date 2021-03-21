@@ -119,11 +119,11 @@ export default function App() {
   useEffect(() => {
     fetchUser();
     return () => {
-      console.log("App cleanup?");
+      //console.log("App cleanup?");
     }
   }, [])
 
-  console.log(`user from App component ${user}`);
+  //console.log(`user from App component ${user}`);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

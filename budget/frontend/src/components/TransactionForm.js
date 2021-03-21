@@ -43,7 +43,7 @@ function TransactionForm(props) {
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(`money in submit is ${money}`);
+        //console.log(`money in submit is ${money}`);
         // Create new data
         const new_data = {
             name: e.target[0].value,
@@ -51,7 +51,7 @@ function TransactionForm(props) {
             category: category,
         }
         
-        console.log(`amount value to be sent to backend ${new_data["amount"]}`);
+        //console.log(`amount value to be sent to backend ${new_data["amount"]}`);
         
         // set spending text to zero after submitting
         e.target[0].value = "";
@@ -74,7 +74,7 @@ function TransactionForm(props) {
         })
         .then(response => response.json()) // response
         .then(data => {
-            console.log(data)
+            //console.log(data)
             // State is set here to receive id for data from server
             setTransactionData([data, ...transactionData]);
         })
@@ -98,7 +98,7 @@ function TransactionForm(props) {
                 amount,
             );
         }
-        console.log(`money is ${money}`);
+        //console.log(`money is ${money}`);
     };
 
     return (

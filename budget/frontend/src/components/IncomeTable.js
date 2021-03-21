@@ -25,19 +25,19 @@ function IncomeTable(props) {
         fetch('/api/income')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             setIncomeData(data);
         })
         .catch(error => console.log(error))
 
         
         return () => {
-            console.log("effect clean?");
+            //console.log("effect clean?");
         }
     }, [])
 
     function handleDelete(id){
-        console.log(id);
+        //console.log(id);
         
         // Send request to server
         fetch(`api/income/${id}/delete/`, {
@@ -51,9 +51,9 @@ function IncomeTable(props) {
         .then(response => {response.json()}) // response
         .then(data => {
             // returns {"detail": "Not found."} if it fails
-            console.log(data)
+            //console.log(data)
             if (!data){
-                console.log(`data has been deleted successfuly`);
+                //console.log(`data has been deleted successfuly`);
                 setIncomeData(incomeData.filter((income) => income.id !== id));
             }            
             // doesn't return any data if it is successfull, only 204 Response
@@ -89,8 +89,6 @@ function IncomeTable(props) {
             headerClassName: classes.columnSeparator,
             renderCell: (params) => (
                 <>
-                {console.log(params)}
-                {console.log(params.row.id)}
                 <Delete fontSize="small" onClick={() => handleDelete(params.row.id)} cursor="pointer" />
                 </>
             )

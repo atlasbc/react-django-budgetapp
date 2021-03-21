@@ -76,7 +76,7 @@ export default function Register() {
         .then(data => {
             // console.log(data);
             if (data["success"]){
-                console.log(data["success"]);
+                //console.log(data["success"]);
                 localStorage.setItem("user", data["user"])
                 setUser(data["user"]);
             }

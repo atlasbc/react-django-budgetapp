@@ -26,19 +26,19 @@ function TransactionTable(props) {
         fetch('/api/transactions')
         .then(response => response.json())
         .then(data => {
-            console.log(`useEffect data for first time ${data}`);
+            //console.log(`useEffect data for first time ${data}`);
             setTransactionData(data);
         })
         .catch(error => console.log(error))
 
         
         return () => {
-            console.log("effect clean?");
+            //console.log("effect clean?");
         }
     }, [])
 
     function handleDelete(id){
-        console.log(id);
+        //console.log(id);
         
         // Send request to server
         fetch(`api/transactions/${id}/delete/`, {
@@ -52,10 +52,10 @@ function TransactionTable(props) {
         .then(response => {response.json()}) // response
         .then(data => {
             // returns {"detail": "Not found."} if it fails
-            console.log(`data after deleting an item ${data}`)
+            //console.log(`data after deleting an item ${data}`)
             // doesn't return any data if it is successfull, only 204 Response
             if (!data){
-                console.log(`data has been deleted successfuly`);
+                //console.log(`data has been deleted successfuly`);
                 setTransactionData(transactionData.filter((transaction) => transaction.id !== id));
             }
         })
@@ -90,8 +90,6 @@ function TransactionTable(props) {
             headerClassName: classes.columnSeparator,
             renderCell: (params) => (
                 <>
-                {console.log(params)}
-                {console.log(params.row.id)}
                 <Delete fontSize="small" onClick={() => handleDelete(params.row.id)} cursor="pointer" />
                 </>
             )

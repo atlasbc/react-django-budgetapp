@@ -42,7 +42,7 @@ function IncomeForm(props) {
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(e);
+        //console.log(e);
 
         // Create new data
         const new_data = {
@@ -71,7 +71,7 @@ function IncomeForm(props) {
         })
         .then(response => response.json()) // response
         .then(data => {
-            console.log(data)
+            //console.log(data)
             // State is set here to receive id for data from server
             setIncomeData([data, ...incomeData]);
         })
@@ -92,7 +92,7 @@ function IncomeForm(props) {
                 amount,
             );
         }
-        console.log(`money is ${money}`);
+        //console.log(`money is ${money}`);
     }
 
     return (

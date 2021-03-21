@@ -43,7 +43,7 @@ export default function Header(props) {
     const  {user}  = useContext(UserContext);
     const classes = useStyles();
     const {handleDrawerToggle, handleTheme, prefersDark} = props;
-    console.log(`user from Header component ${user}`);
+    //console.log(`user from Header component ${user}`);
 
     return (
 

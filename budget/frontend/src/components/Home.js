@@ -43,13 +43,13 @@ export default function Home() {
         (accumulator, currentValue) => accumulator + currentValue.data_sum
         , initialValue
     )
-    console.log(sum);
+    //console.log(sum);
     // View for total
     useEffect(() => {
         fetch('/home-request')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             setTotal(data["total"]);
         })
         .catch(error => console.log(error))
@@ -57,13 +57,13 @@ export default function Home() {
         fetch('/api/transactions/categories')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             setTransactionData(data);
         })
         .catch(error => console.log(error))
 
         return () => {
-            console.log("effect clean? || Home");
+            //console.log("effect clean? || Home");
         }
     }, [])
 
