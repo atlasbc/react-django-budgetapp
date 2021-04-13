@@ -32,6 +32,15 @@ const useStyles = makeStyles((theme) => ({
             alignSelf: "stretch",
             margin: "0"
           },        
+    },
+    infoMessage: {
+        width: "15rem",
+        [theme.breakpoints.up('sm')]: {
+            width: "30rem",
+          },
+        [theme.breakpoints.up('md')]: {
+            width: "30rem",
+          },        
     }
   }));
 
@@ -92,6 +101,9 @@ export default function Login() {
                 variant="contained" type="submit">Login</Button>
             </form>
             <h2 style={{textAlign: "center", margin: "1rem 0"}}>{message}</h2>
+            <p className={classes.infoMessage}>If you want to check functionality with already filled data:</p>
+            <p className={classes.infoMessage}>Use username: testuser, password: 123456 to login.</p>
+            <p className={classes.infoMessage}>Otherwise you can create a user very quickly from register page.</p>
         </div>
     )
 }

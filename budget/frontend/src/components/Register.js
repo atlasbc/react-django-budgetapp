@@ -32,7 +32,16 @@ const useStyles = makeStyles((theme) => ({
             alignSelf: "stretch",
             margin: "0"
           },        
-    }
+    },
+    infoMessage: {
+        width: "15rem",
+        [theme.breakpoints.up('sm')]: {
+            width: "30rem",
+          },  
+        [theme.breakpoints.up('md')]: {
+            width: "50rem",
+          },        
+    }    
   }));
 
 
@@ -107,6 +116,8 @@ export default function Register() {
                 variant="contained" type="submit">Register</Button>
             </form>
             <h2 style={{textAlign: "center", margin: "1rem 0"}}>{message}</h2>
+            <p className={classes.infoMessage}>You can create a temporary user with a random email like test@example.com.
+            Email verification is not required since this is just a demo site.</p>
         </div>
     )
 }
