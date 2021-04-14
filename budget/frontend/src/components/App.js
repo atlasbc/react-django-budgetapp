@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { render } from "react-dom";
+import {Helmet} from "react-helmet";
 // Components
 import "./App.css";
 import Home from "./Home";
@@ -11,7 +12,8 @@ import Transactions from "./Transactions";
 import Login from "./Login";
 import Register from "./Register";
 import  {UserContext} from "./UserContext";
-import Sidebar from "./SideBar"
+import Sidebar from "./SideBar";
+import metaImage from '../images/budget-meta.png';
 
 // Material UI
 import { ThemeProvider } from "@material-ui/styles";
@@ -149,6 +151,10 @@ export default function App() {
 
   return (
     <UserContext.Provider value={{user, setUser}}>
+      <Helmet>
+        <title>Budget Management App</title>
+        <meta property="og:image" content={metaImage}/>
+      </Helmet>
       <Router>
       <ThemeProvider theme={theme}>
       <CssBaseline/>
